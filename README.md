@@ -9,7 +9,7 @@ NodeJs with express using mongodb.
 #### Install and Start
 
 ```json
-	npm i && npm start
+npm i && npm start
 ```
 
 - rotas:
