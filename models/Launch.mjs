@@ -60,6 +60,6 @@ const launchesSchema = new Schema({
   id: String,
 });
 
-const LauncheModel = model("Launche", launchesSchema);
+const LaunchModel = model("Launches", launchesSchema);
 
-export { LauncheModel, launchesSchema };
+export { LaunchModel, launchesSchema };

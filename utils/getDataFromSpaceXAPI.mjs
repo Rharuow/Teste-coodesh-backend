@@ -1,15 +1,15 @@
-import { LauncheModel } from "../models/Launche.mjs";
+import { LaunchModel } from "../models/Launch.mjs";
 
 export const getDataFromSpaceX = async () => {
   try {
-    const launche = await (
+    const launch = await (
       await fetch("https://api.spacexdata.com/v5/launches/latest")
     ).json();
 
-    const launcheAlreadyExists = await LauncheModel.findOne({ id: launche.id });
+    const launchAlreadyExists = await LaunchModel.findOne({ id: launch.id });
 
-    if (launcheAlreadyExists === null) {
-      await LauncheModel.create(launche);
+    if (launchAlreadyExists === null) {
+      await LaunchModel.create(launch);
       return "data pushed from spacex api";
     }
 
