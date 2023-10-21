@@ -22,7 +22,60 @@ export const pizzaStats = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({
-      message: "Desculpe, houve um erro ao gerar as estatíticas dos foguetes",
+      message:
+        "Desculpe, houve um erro ao gerar as estatíticas de pizza dos foguetes",
+    });
+  }
+};
+
+export const barStats = async (req, res) => {
+  try {
+    const rockets = await RocketModel.find();
+
+    const metadata = rockets.reduce((accLaunchesForYear, currentRocket) => {
+      const rocketForYearLuanched = currentRocket.launches.reduce(
+        (accLaunches, currentLaunch) => {
+          if (accLaunches.some((launch) => launch.year == currentLaunch.year)) {
+            accLaunches = accLaunches.map((launch) =>
+              launch.year == currentLaunch.year
+                ? { ...launch, amountLaunches: launch.amountLaunches + 1 }
+                : launch
+            );
+          } else {
+            accLaunches.push({
+              amountLaunches: 1,
+              launch_id: currentLaunch.id,
+              year: currentLaunch.year,
+              id: currentRocket.id,
+              name: currentRocket.name,
+              color: currentRocket.color,
+            });
+          }
+
+          return accLaunches;
+        },
+        []
+      );
+
+      rocketForYearLuanched.forEach((launchReduced) => {
+        if (Object.keys(accLaunchesForYear).includes(launchReduced.year))
+          accLaunchesForYear[`${launchReduced.year}`].push(launchReduced);
+        else {
+          accLaunchesForYear[`${launchReduced.year}`] = [launchReduced];
+        }
+      });
+
+      return accLaunchesForYear;
+    }, {});
+
+    return res.json({
+      metadata,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      message:
+        "Desculpe, houve um erro ao gerar as estatíticas de barra dos foguetes",
     });
   }
 };
