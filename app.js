@@ -16,9 +16,8 @@ app.use("/", router);
 const start = async () => {
   try {
     await connection();
-    cron.schedule("* * * * *", async () => {
-      await getAllLaunches();
-    });
+    const launches = await getAllLaunches();
+    console.log(launches);
     cron.schedule(
       "0 9 * * *",
       async () => {
