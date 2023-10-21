@@ -24,12 +24,9 @@ const index = async (req, res) => {
       search ? { name: { $regex: ".*" + search + ".*" } } : {}
     )
       .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
+      .skip((page - 1) * limit);
 
-    const launchesCount = await LaunchModel.find(
-      search ? { name: { $regex: ".*" + search + ".*" } } : {}
-    ).count();
+    const launchesCount = launches.length;
 
     const totalPages = Math.ceil(launchesCount / limit);
 
