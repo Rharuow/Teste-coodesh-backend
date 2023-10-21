@@ -23,7 +23,7 @@ export const pizzaStats = async (req, res) => {
     console.log(error);
     return res.status(400).json({
       message:
-        "Desculpe, houve um erro ao gerar as estatíticas de pizza dos foguetes",
+        "Sorry, there was an error generating the rocket pizza statistics",
     });
   }
 };
@@ -74,8 +74,7 @@ export const barStats = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({
-      message:
-        "Desculpe, houve um erro ao gerar as estatíticas de barra dos foguetes",
+      message: "Sorry, there was an error generating the rocket bar stats",
     });
   }
 };
