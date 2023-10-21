@@ -4,7 +4,7 @@ import cron from "node-cron";
 import { connection } from "./db/conn.mjs";
 import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI.mjs";
 import { router } from "./routes/routes.mjs";
-import { getAllLaunches } from "./utils/getAllLaunches.mjs";
+import { seed } from "./utils/seed.mjs";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -16,7 +16,7 @@ app.use("/", router);
 const start = async () => {
   try {
     await connection();
-    const launches = await getAllLaunches();
+    const launches = await seed();
     console.log(launches);
     cron.schedule(
       "0 9 * * *",
