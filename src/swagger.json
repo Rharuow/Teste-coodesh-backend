@@ -37,6 +37,32 @@
           }
         }
       }
+    },
+    "/launches?search=<porperty_name>&limit=<number>&page=<number>": {
+      "get": {
+        "summary": "List all launches",
+        "description": "Return all launches and accept query param router 'search' thats filter launches by name porperty. Futermore, 'limit' and 'page' can be pass at query param router to paginate the request. All the params are optionals",
+        "tags": ["Launch"],
+        "responses:": {
+          "200": {
+            "desription": "Fullstack Challenge 🏅 - Space X API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Launch"
+                }
+              }
+            }
+          },
+          "304": {
+            "desription": "Fullstack Challenge 🏅 - Space X API"
+          },
+          "400": {
+            "description": "Sorry, something is worng at home router..."
+          }
+        }
+      }
     }
   },
   "components": {
