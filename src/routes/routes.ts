@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import { homeRouter } from "./homeRouter.mjs";
-import { launchesRouter } from "./launchesRoute.mjs";
-import { statsRouter } from "./statsRouter.mjs";
+import { homeRouter } from "./homeRouter";
+import { launchesRouter } from "./launchesRoute";
+import { statsRouter } from "./statsRouter";
 
 const router = Router();
 

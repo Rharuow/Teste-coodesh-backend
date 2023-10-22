@@ -1,5 +1,5 @@
 import express from "express";
-import { barStats, pizzaStats } from "../controllers/stats.mjs";
+import { barStats, pizzaStats } from "../controllers/stats";
 
 const statsRouter = express.Router();
 

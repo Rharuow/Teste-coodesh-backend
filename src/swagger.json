@@ -22,9 +22,20 @@
   "paths": {
     "/": {
       "get": {
-        "summary": "Home router",
+        "summary": "Apresentation router",
         "description": "Return a apresentation message",
-        "tags": ["Home"]
+        "tags": ["Apresentation"],
+        "responses:": {
+          "200": {
+            "desription": "Fullstack Challenge 🏅 - Space X API"
+          },
+          "304": {
+            "desription": "Fullstack Challenge 🏅 - Space X API"
+          },
+          "400": {
+            "description": "Sorry, something is worng at home router..."
+          }
+        }
       }
     }
   },

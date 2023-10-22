@@ -1,8 +1,22 @@
 import dayjs from "dayjs";
-import { LaunchModel } from "../models/Launch.mjs";
-import { RocketModel } from "../models/Rocket.mjs";
+import { LaunchModel } from "../models/Launch";
+import { RocketModel } from "../models/Rocket";
 
-import { handleColor } from "./generateColor.mjs";
+import { handleColor } from "./generateColor";
+import { SpaceXLaunches } from "./spaceX";
+
+type RocketType = {
+  id: string;
+  name: string;
+  color: string;
+  launches: [
+    {
+      year: string | number;
+      success: boolean;
+      id: string;
+    }
+  ];
+};
 
 export const seed = async () => {
   try {
@@ -10,9 +24,9 @@ export const seed = async () => {
 
     if (launchesMongo.length > 0) return "launches are loaded";
 
-    const launches = await (
+    const launches = (await (
       await fetch("https://api.spacexdata.com/v5/launches")
-    ).json();
+    ).json()) as Array<SpaceXLaunches>;
 
     const rockets = launches.reduce((rckts, current) => {
       if (!rckts.some((rcktsLaun) => rcktsLaun.id === current.rocket)) {
@@ -46,10 +60,10 @@ export const seed = async () => {
                 ],
               }
             : rocket
-        );
+        ) as Array<RocketType>;
       }
       return rckts;
-    }, []);
+    }, [] as Array<RocketType>);
 
     await LaunchModel.insertMany(launches);
 

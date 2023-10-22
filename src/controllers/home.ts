@@ -1,7 +1,9 @@
-export const home = (req, res) => {
+import { Request, Response } from "express";
+
+export const home = (req: Request, res: Response) => {
   try {
     return res
-      .status(204)
+      .status(200)
       .json({ message: "Fullstack Challenge 🏅 - Space X API" });
   } catch (error) {
     console.log(error);
