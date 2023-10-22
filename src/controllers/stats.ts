@@ -87,6 +87,7 @@ export const barStats = async (req: Request, res: Response) => {
     }, {});
 
     return res.json({
+      rockets,
       metadata,
     });
   } catch (error) {
