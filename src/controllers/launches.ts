@@ -1,7 +1,14 @@
-import { LaunchModel } from "../models/Launch.mjs";
+import { Request, Response } from "express";
+import { LaunchModel } from "../models/Launch";
 
-const index = async (req, res) => {
-  const { search, limit = 10, page = 1 } = req.query;
+interface Query {
+  search?: string;
+  limit?: number;
+  page?: number;
+}
+
+const index = async (req: Request, res: Response) => {
+  const { search, limit = 10, page = 1 } = req.query as Query;
 
   try {
     const launches = await LaunchModel.find(

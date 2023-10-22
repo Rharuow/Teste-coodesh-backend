@@ -4,9 +4,9 @@ import mongoose from "mongoose";
 async function connection() {
   try {
     mongoose.set("strictQuery", true);
-    await mongoose.connect(process.env.MONGODB_CONNECTION);
+    await mongoose.connect(process.env.MONGODB_CONNECTION || "");
     console.log("conectado ao banco");
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     throw new Error(`error to connect mongoose : ${error.message}`);
   }

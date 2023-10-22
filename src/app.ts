@@ -1,15 +1,20 @@
 import express from "express";
 import cron from "node-cron";
+import swaggerUi from "swagger-ui-express";
 
-import { connection } from "./db/conn.mjs";
-import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI.mjs";
-import { router } from "./routes/routes.mjs";
-import { seed } from "./utils/seed.mjs";
+import { connection } from "./db/conn";
+import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI";
+import { router } from "./routes/routes";
+import { seed } from "./utils/seed";
+
+import { swaggerDef } from "./swaggerDef";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDef));
 
 app.use("/", router);
 

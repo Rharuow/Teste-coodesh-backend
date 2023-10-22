@@ -1,41 +1,47 @@
-type SpaceXLaunche = {
-  fairings: null;
+export type SpaceXLaunches = {
+  fairings: {
+    reused: boolean;
+    recovery_attempt: boolean;
+    recovered: boolean;
+    ships: Array<string>;
+  } | null;
   links: {
     patch: {
       small: string;
       large: string;
     };
     reddit: {
-      campaign: string;
+      campaign?: string;
       launch: string;
-      media: string;
-      recovery: string;
+      media?: string;
+      recovery?: string;
     };
     flickr: {
       small: Array<string>;
       original: Array<string>;
     };
-    presskit: string;
+    presskit?: string;
     webcast: string;
     youtube_id: string;
-    article: string;
+    article?: string;
     wikipedia: string;
   };
-  static_fire_date_utc: string;
-  static_fire_date_unix: number;
-  tdb: boolean;
+  static_fire_date_utc?: string;
+  static_fire_date_unix?: string;
   net: boolean;
-  window: number;
+  window?: string;
   rocket: string;
   success: boolean;
-  failures: [];
-  details: string;
-  crew: Array<string>;
+  failures: Array<string>;
+  details?: string;
+  crew: Array<{
+    crew: string;
+    role: string;
+  }>;
   ships: Array<string>;
   capsules: Array<string>;
   payloads: Array<string>;
   launchpad: string;
-  auto_update: boolean;
   flight_number: number;
   name: string;
   date_utc: string;
@@ -54,5 +60,8 @@ type SpaceXLaunche = {
     landing_type: string;
     landpad: string;
   }>;
+  auto_update: boolean;
+  tbd: boolean;
+  launch_library_id: string;
   id: string;
 };

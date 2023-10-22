@@ -1,7 +1,9 @@
-import { LaunchModel } from "../models/Launch.mjs";
-import { RocketModel } from "../models/Rocket.mjs";
+import { Request, Response } from "express";
 
-export const pizzaStats = async (req, res) => {
+import { LaunchModel } from "../models/Launch";
+import { RocketModel } from "../models/Rocket";
+
+export const pieStats = async (req: Request, res: Response) => {
   try {
     const rockets = await RocketModel.find();
 
@@ -28,7 +30,16 @@ export const pizzaStats = async (req, res) => {
   }
 };
 
-export const barStats = async (req, res) => {
+interface ILaunch {
+  amountLaunches?: number;
+  launch_id?: string;
+  year?: string;
+  id?: string;
+  name?: string;
+  color?: string;
+}
+
+export const barStats = async (req: Request, res: Response) => {
   try {
     const rockets = await RocketModel.find();
 
@@ -38,7 +49,10 @@ export const barStats = async (req, res) => {
           if (accLaunches.some((launch) => launch.year == currentLaunch.year)) {
             accLaunches = accLaunches.map((launch) =>
               launch.year == currentLaunch.year
-                ? { ...launch, amountLaunches: launch.amountLaunches + 1 }
+                ? {
+                    ...launch,
+                    amountLaunches: Number(launch.amountLaunches) + 1,
+                  }
                 : launch
             );
           } else {
@@ -54,13 +68,17 @@ export const barStats = async (req, res) => {
 
           return accLaunches;
         },
-        []
+        [] as Array<ILaunch>
       );
 
       rocketForYearLuanched.forEach((launchReduced) => {
-        if (Object.keys(accLaunchesForYear).includes(launchReduced.year))
+        if (
+          Object.keys(accLaunchesForYear).includes(String(launchReduced.year))
+        )
+          // @ts-ignore
           accLaunchesForYear[`${launchReduced.year}`].push(launchReduced);
         else {
+          // @ts-ignore
           accLaunchesForYear[`${launchReduced.year}`] = [launchReduced];
         }
       });

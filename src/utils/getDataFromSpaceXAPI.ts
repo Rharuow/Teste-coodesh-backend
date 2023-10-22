@@ -1,10 +1,11 @@
-import { LaunchModel } from "../models/Launch.mjs";
+import { LaunchModel } from "../models/Launch";
+import { SpaceXLaunches } from "./spaceX";
 
 export const getDataFromSpaceX = async () => {
   try {
-    const launch = await (
+    const launch = (await (
       await fetch("https://api.spacexdata.com/v5/launches/latest")
-    ).json();
+    ).json()) as SpaceXLaunches;
 
     const launchAlreadyExists = await LaunchModel.findOne({ id: launch.id });
 
