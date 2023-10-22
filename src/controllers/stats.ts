@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
 
-export const pizzaStats = async (req: Request, res: Response) => {
+export const pieStats = async (req: Request, res: Response) => {
   try {
     const rockets = await RocketModel.find();
 

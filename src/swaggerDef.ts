@@ -26,12 +26,9 @@ export const swaggerDef = {
         summary: "Apresentation router",
         description: "Return a apresentation message",
         tags: ["Apresentation"],
-        "responses:": {
+        responses: {
           "200": {
-            desription: "Fullstack Challenge 🏅 - Space X API",
-          },
-          "304": {
-            desription: "Fullstack Challenge 🏅 - Space X API",
+            description: "Fullstack Challenge 🏅 - Space X API",
           },
           "400": {
             description: "Sorry, something is worng at home router...",
@@ -39,29 +36,72 @@ export const swaggerDef = {
         },
       },
     },
-    "/launches?search=<porperty_name>&limit=<number>&page=<number>": {
+    "/launches": {
       get: {
         summary: "List all launches",
         description:
           "Return all launches and accept query param router 'search' thats filter launches by name porperty. Futermore, 'limit' and 'page' can be pass at query param router to paginate the request. All the params are optionals",
         tags: ["Launch"],
-        "responses:": {
-          "200": {
-            desription: "Fullstack Challenge 🏅 - Space X API",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "array",
-                  $ref: "#/components/schemas/Launch",
-                },
-              },
-            },
+        parameters: [
+          {
+            name: "search",
+            in: "query",
+            description: "Text to filter launches by name property",
+            required: false,
           },
-          "304": {
-            desription: "Fullstack Challenge 🏅 - Space X API",
+          {
+            name: "limit",
+            in: "query",
+            description: "How much per page",
+            default: 10,
+            required: false,
+          },
+          {
+            name: "page",
+            in: "query",
+            description: "Get specific page",
+            default: 1,
+            required: false,
+          },
+        ],
+        responses: {
+          "200": {
+            description: "List launches paginated and filtrable",
           },
           "400": {
             description: "Sorry, something is worng at home router...",
+          },
+        },
+      },
+    },
+    "/stats/pie": {
+      get: {
+        summary: "GET data to pie chart",
+        description: "Provide data to be feed a pie chart in the frontend.",
+        tags: ["Stats"],
+        responses: {
+          "200": {
+            description: "Data to feed a pie chart",
+          },
+          "400": {
+            description:
+              "Sorry, there was an error generating the rocket pizza statistics",
+          },
+        },
+      },
+    },
+    "/stats/bar": {
+      get: {
+        summary: "GET data to bar chart",
+        description: "Provide data to be feed a bar chart in the frontend.",
+        tags: ["Stats"],
+        responses: {
+          "200": {
+            description: "Data to feed a bar chart",
+          },
+          "400": {
+            description:
+              "Sorry, there was an error generating the rocket bar stats",
           },
         },
       },
@@ -86,49 +126,55 @@ export const swaggerDef = {
                   },
                 },
               },
-            },
-            reddit: {
-              type: "object",
-              properties: {
-                campaign: {
-                  type: "string",
-                },
-                launch: {
-                  type: "string",
-                },
-                media: {
-                  type: "string",
-                },
-                recovery: {
-                  type: "string",
-                },
-              },
-            },
-            flickr: {
-              type: "object",
-              properties: {
-                small: {
-                  type: "Array<string>",
-                },
-                original: {
-                  type: "Array<string>",
+              reddit: {
+                type: "object",
+                properties: {
+                  campaign: {
+                    type: "string",
+                  },
+                  launch: {
+                    type: "string",
+                  },
+                  media: {
+                    type: "string",
+                  },
+                  recovery: {
+                    type: "string",
+                  },
                 },
               },
-            },
-            presskit: {
-              type: "string",
-            },
-            webcast: {
-              type: "string",
-            },
-            youtube_id: {
-              type: "string",
-            },
-            article: {
-              type: "string",
-            },
-            wikipedia: {
-              type: "string",
+              flickr: {
+                type: "object",
+                properties: {
+                  small: {
+                    type: "array",
+                    items: {
+                      type: "string",
+                    },
+                  },
+                  original: {
+                    type: "array",
+                    items: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+              presskit: {
+                type: "string",
+              },
+              webcast: {
+                type: "string",
+              },
+              youtube_id: {
+                type: "string",
+              },
+              article: {
+                type: "string",
+              },
+              wikipedia: {
+                type: "string",
+              },
             },
           },
           static_fire_date_utc: {
@@ -153,22 +199,45 @@ export const swaggerDef = {
             type: "boolean",
           },
           failures: {
-            type: "Array<string>",
+            type: "array",
+            items: {
+              type: "string",
+            },
           },
           details: {
             type: "string",
           },
           crew: {
-            type: "Array<{crew: string; role: string}>",
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                crew: {
+                  type: "string",
+                },
+                role: {
+                  type: "string",
+                },
+              },
+            },
           },
           ships: {
-            type: "Array<string>",
+            type: "array",
+            items: {
+              type: "string",
+            },
           },
           capsules: {
-            type: "Array<string>",
+            type: "array",
+            items: {
+              type: "string",
+            },
           },
           payloads: {
-            type: "Array<string>",
+            type: "array",
+            items: {
+              type: "string",
+            },
           },
           launchpad: {
             type: "string",
@@ -198,7 +267,23 @@ export const swaggerDef = {
             type: "boolean",
           },
           cores: {
-            type: "Array<{core: string; flight: number; gridfinds: number; legs: boolean; reused: boolean; landing_attempt: boolean; landing_success: boolean; landing_type: string; landpad: string}>",
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                core: {
+                  type: "string",
+                },
+                fligth: { type: "number" },
+                gridfinds: { type: "number" },
+                legs: { type: "boolean" },
+                reused: { type: "boolean" },
+                landing_attempt: { type: "boolean" },
+                landing_success: { type: "boolean" },
+                landing_type: { type: "string" },
+                landpad: { type: "string" },
+              },
+            },
           },
           id: {
             type: "string",

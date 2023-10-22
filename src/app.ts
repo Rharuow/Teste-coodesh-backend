@@ -7,14 +7,14 @@ import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI";
 import { router } from "./routes/routes";
 import { seed } from "./utils/seed";
 
-import swaggerDoc from "./swagger.json";
+import { swaggerDef } from "./swaggerDef";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDef));
 
 app.use("/", router);
 

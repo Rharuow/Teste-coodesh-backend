@@ -1,9 +1,9 @@
 import express from "express";
-import { barStats, pizzaStats } from "../controllers/stats";
+import { barStats, pieStats } from "../controllers/stats";
 
 const statsRouter = express.Router();
 
-statsRouter.get("/pizza", pizzaStats);
+statsRouter.get("/pie", pieStats);
 statsRouter.get("/bar", barStats);
 
 export { statsRouter };
