@@ -1,30 +1,26 @@
 import { Request, Response } from "express";
-import { LaunchModel } from "../models/Launch";
 
-interface Query {
+import { createFilter } from "./utils/createFilter";
+import { LaunchModel } from "../../models/Launch";
+
+export interface Query {
   search?: string;
+  results?: "success" | "fail";
   limit?: number;
   page?: number;
 }
 
 const index = async (req: Request, res: Response) => {
-  const { search, limit = 10, page = 1 } = req.query as Query;
+  const { search, limit = 10, page = 1, results } = req.query as Query;
 
   try {
-    const launches = await LaunchModel.find(
-      search
-        ? {
-            $or: [
-              { name: { $regex: ".*" + search + ".*" } },
-              { "rocket.name": { $regex: ".*" + search + ".*" } },
-            ],
-          }
-        : {}
-    )
+    const launches = await LaunchModel.find(createFilter(search, results))
       .limit(limit)
       .skip((page - 1) * limit);
 
-    const launchesCount = launches.length;
+    const launchesCount = await LaunchModel.find(
+      createFilter(search, results)
+    ).count();
 
     const totalPages = Math.ceil(launchesCount / limit);
 
