@@ -28,10 +28,18 @@ export const seed = async () => {
       await fetch("https://api.spacexdata.com/v5/launches")
     ).json()) as Array<SpaceXLaunches>;
 
+    const rocketsFromSpaceXAPI = (await (
+      await fetch("https://api.spacexdata.com/v4/rockets")
+    ).json()) as Array<{ id: string; name: string }>;
+
     const rockets = launches.reduce((rckts, current) => {
       if (!rckts.some((rcktsLaun) => rcktsLaun.id === current.rocket)) {
         rckts.push({
-          name: current.name,
+          name: String(
+            rocketsFromSpaceXAPI.find(
+              (rocktFromSpXAPI) => rocktFromSpXAPI.id === current.rocket
+            )?.name
+          ),
           id: current.rocket,
           color:
             rckts.length === 0
@@ -65,7 +73,15 @@ export const seed = async () => {
       return rckts;
     }, [] as Array<RocketType>);
 
-    await LaunchModel.insertMany(launches);
+    await LaunchModel.insertMany(
+      launches.map((launch) => ({
+        ...launch,
+        rocket: {
+          name: rockets.find((rocket) => rocket.id === launch.rocket)?.name,
+          id: launch.rocket,
+        },
+      }))
+    );
 
     await RocketModel.insertMany(rockets);
 

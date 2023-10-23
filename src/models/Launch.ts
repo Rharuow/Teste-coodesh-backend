@@ -27,7 +27,7 @@ const launchesSchema = new Schema({
   tdb: Boolean,
   net: Boolean,
   window: Number,
-  rocket: String,
+  rocket: { name: String, id: String },
   success: Boolean,
   failures: [],
   details: String,
