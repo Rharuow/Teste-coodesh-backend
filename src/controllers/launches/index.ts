@@ -15,6 +15,7 @@ const index = async (req: Request, res: Response) => {
 
   try {
     const launches = await LaunchModel.find(createFilter(search, results))
+      .sort({ id: "desc" })
       .limit(limit)
       .skip((page - 1) * limit);
 
