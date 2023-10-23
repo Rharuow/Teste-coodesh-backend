@@ -8,10 +8,12 @@ import { router } from "./routes/routes";
 import { seed } from "./utils/seed";
 
 import { swaggerDef } from "./swaggerDef";
+import cors from "cors";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDef));
