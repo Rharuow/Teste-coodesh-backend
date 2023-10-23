@@ -87,7 +87,13 @@ export const barStats = async (req: Request, res: Response) => {
     }, {});
 
     return res.json({
-      rockets,
+      rockets: rockets.sort((accRocket, currentRocket) =>
+        accRocket.launches.length > currentRocket.launches.length
+          ? -1
+          : accRocket.launches.length < currentRocket.launches.length
+          ? 1
+          : 0
+      ),
       metadata,
     });
   } catch (error) {
