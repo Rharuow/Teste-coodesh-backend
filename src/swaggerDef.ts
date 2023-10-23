@@ -50,9 +50,22 @@ export const swaggerDef = {
             required: false,
           },
           {
+            name: "results",
+            in: "query",
+            description: "Pass 'success' or 'fail' to filter by results",
+            schema: {
+              type: "string",
+              enum: ["success", "fail"],
+            },
+            required: false,
+          },
+          {
             name: "limit",
             in: "query",
             description: "How much per page",
+            schema: {
+              type: "number",
+            },
             default: 10,
             required: false,
           },
@@ -60,6 +73,9 @@ export const swaggerDef = {
             name: "page",
             in: "query",
             description: "Get specific page",
+            schema: {
+              type: "number",
+            },
             default: 1,
             required: false,
           },
