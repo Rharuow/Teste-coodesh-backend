@@ -12,7 +12,14 @@ const index = async (req: Request, res: Response) => {
 
   try {
     const launches = await LaunchModel.find(
-      search ? { name: { $regex: ".*" + search + ".*" } } : {}
+      search
+        ? {
+            $or: [
+              { name: { $regex: ".*" + search + ".*" } },
+              { "rocket.name": { $regex: ".*" + search + ".*" } },
+            ],
+          }
+        : {}
     )
       .limit(limit)
       .skip((page - 1) * limit);
