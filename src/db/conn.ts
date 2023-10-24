@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 async function connection() {
   console.log("MONGODB_CONNECTION = ", process.env.MONGODB_CONNECTION);
   try {
-    mongoose.set("strictQuery", true);
+    mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGODB_CONNECTION || "");
     console.log("conectado ao banco");
   } catch (error: any) {
