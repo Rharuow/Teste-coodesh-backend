@@ -2,8 +2,8 @@ import "dotenv/config";
 import mongoose from "mongoose";
 
 async function connection() {
+  console.log("MONGODB_CONNECTION = ", process.env.MONGODB_CONNECTION);
   try {
-    console.log("MONGODB_CONNECTION = ", process.env.MONGODB_CONNECTION);
     mongoose.set("strictQuery", true);
     await mongoose.connect(process.env.MONGODB_CONNECTION || "");
     console.log("conectado ao banco");
