@@ -1,4 +1,3 @@
-// @ts-ignore
 import CompColors from "complementary-colors";
 
 export const handleColor = (color: string) => {
