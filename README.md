@@ -4,7 +4,7 @@
 
 ### STACK
 
-NodeJs with express using mongodb.
+<a href="https://nodejs.org/en">NodeJs</a> with <ahref="https://expressjs.com/pt-br/">express</a> using <a href="https://www.mongodb.com/pt-br">mongodb</a> hosted at <a href="https://cloud.mongodb.com/">Atlas MongoDB</a>.
 
 #### Install and Start
 
