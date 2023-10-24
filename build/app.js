@@ -61,12 +61,15 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, (0, conn_1.connection)()];
+                console.log(process.env.MONGODB_CONNECTION);
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, (0, conn_1.connection)()];
+            case 2:
                 _a.sent();
                 return [4 /*yield*/, (0, seed_1.seed)()];
-            case 2:
+            case 3:
                 launches = _a.sent();
                 console.log(launches);
                 node_cron_1.default.schedule("0 9 * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -87,13 +90,13 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     timezone: "America/Sao_Paulo",
                 });
                 app.listen(PORT, function () { return console.log("Server started on port ".concat(PORT)); });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 error_1 = _a.sent();
                 console.error(error_1);
                 process.exit(1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
