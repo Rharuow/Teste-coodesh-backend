@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 
 async function connection() {
   try {
+    console.log(
+      "process.env.MONGODB_CONNECTION = ",
+      process.env.MONGODB_CONNECTION
+    );
     mongoose.set("strictQuery", true);
     await mongoose.connect(process.env.MONGODB_CONNECTION || "");
     console.log("conectado ao banco");

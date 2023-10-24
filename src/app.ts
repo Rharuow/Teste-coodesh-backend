@@ -21,7 +21,6 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDef));
 app.use("/", router);
 
 const start = async () => {
-  console.log(process.env.MONGODB_CONNECTION);
   try {
     await connection();
     const launches = await seed();
