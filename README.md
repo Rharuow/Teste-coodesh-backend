@@ -1,5 +1,7 @@
 # Fullstack Challenge 🏅 Space X API
 
+> This is a challenge by <a href="https://coodesh.com/">Coodesh</a>
+
 ## Backend teste
 
 ### STACK
@@ -7,6 +9,7 @@
 <a href="https://nodejs.org/en">NodeJs</a> with <a href="https://expressjs.com/pt-br/">express</a> using <a href="https://www.mongodb.com/pt-br">mongodb</a> hosted at <a href="https://cloud.mongodb.com/">Atlas MongoDB</a>.
 
 #### Language
+
 - TypeScript
 
 #### Install and Start
@@ -14,7 +17,9 @@
 ```bash
 git clone git@github.com:Rharuow/Teste-coodesh-backend.git && cd ./Teste-coodesh-backend && npm i && npm run dev
 ```
+
 > **_NOTE:_** .env file must have BASE_URL='http://localhost' and MONGODB_CONNECTION. Create account on <a href="https://www.mongodb.com/atlas/database">atlas db</a> and follow the [ATTACHMENT](#attachment) section to generate your MONGODB_CONNECTION.
+
 - rotas:
 
 <details  open>
@@ -1493,7 +1498,6 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
     ]
   }
 }
-
 ```
 
 </details>
@@ -2775,7 +2779,6 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
     "rocketsTotal": 3
   }
 }
-
 ```
 
 </details>
@@ -3458,21 +3461,19 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 
 </details>
 
-
-
 <h1 id="attachment">ATTACHMENT</h1>
 
 - <a href="https://cloud.mongodb.com/">Here<a> Click at database
- ![frist](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/f7dc5574-d6ce-458a-b1c4-2d231a21aed4)
+  ![frist](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/f7dc5574-d6ce-458a-b1c4-2d231a21aed4)
 
--  Create a database free
-![second](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/67bad4ab-0832-41ad-919d-6799ed7235fd)
+- Create a database free
+  ![second](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/67bad4ab-0832-41ad-919d-6799ed7235fd)
 
 - Click at connect button
-![third](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/eec38993-ec03-41c0-bef6-2dfe1a554ddf)
+  ![third](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/eec38993-ec03-41c0-bef6-2dfe1a554ddf)
 
 - Click in this option
-![fourth](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/e1b558ff-1ea6-4321-a599-d0654b1294e9)
+  ![fourth](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/e1b558ff-1ea6-4321-a599-d0654b1294e9)
 
 - And finally, get the MONGODB_CONNECTION
-![last](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/b43864ed-744a-432a-8bd1-cd260e43353e)
+  ![last](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/b43864ed-744a-432a-8bd1-cd260e43353e)
