@@ -23,14 +23,11 @@ app.use("/", router);
 const start = async () => {
   try {
     await connection();
-    const launches = await seed();
-    console.log(launches);
+    await seed();
     cron.schedule(
       "0 9 * * *",
       async () => {
-        console.log("updating data from SpaceX");
-        const status = await getDataFromSpaceX();
-        console.log(status);
+        await getDataFromSpaceX();
       },
       {
         scheduled: true,
@@ -38,7 +35,9 @@ const start = async () => {
       }
     );
 
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
   } catch (error) {
     console.error(error);
     process.exit(1);
