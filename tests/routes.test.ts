@@ -49,6 +49,11 @@ describe("Test route to stats", () => {
     return expect(response.statusCode).toBe(200);
   });
 
+  test("It should response 422 if send any query params", async () => {
+    const response = await request(app).get("/stats/pie?anyParams=true");
+    return expect(response.statusCode).toBe(422);
+  });
+
   test("It should response 200 when request done about stats bar", async () => {
     const response = await request(app).get("/stats/bar");
     return expect(response.statusCode).toBe(200);
