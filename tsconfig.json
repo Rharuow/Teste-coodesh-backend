@@ -1,18 +1,26 @@
 {
-  "outDir": "./dist",
   "rootDir": "./src",
   "compilerOptions": {
+    "outDir": "./build",
     "target": "es5",
     "module": "commonjs",
     "lib": [
       "es6"
     ],
+    "allowUnreachableCode": false,
+    "noImplicitReturns": true,
     "allowJs": true,
-    "outDir": "build",
     "rootDir": "src",
-    "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./plugins/**/*",
+    "./typings/**/*",
+    "./build/**/*" // This is what fixed it!
+  ]
 }

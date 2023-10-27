@@ -4,6 +4,10 @@ import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
 
 export const pieStats = async (req: Request, res: Response) => {
+  const params = req.params;
+
+  console.log(params);
+
   try {
     const rockets = await RocketModel.find();
 

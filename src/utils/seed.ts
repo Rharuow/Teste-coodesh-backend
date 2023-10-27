@@ -18,7 +18,9 @@ type RocketType = {
   ];
 };
 
-export const seed = async () => {
+export const seed: () => Promise<
+  "launches are loaded" | "launches pushed"
+> = async () => {
   try {
     const launchesMongo = await LaunchModel.find();
 
@@ -88,5 +90,6 @@ export const seed = async () => {
     return "launches pushed";
   } catch (error) {
     console.log("error = ", error);
+    return error;
   }
 };

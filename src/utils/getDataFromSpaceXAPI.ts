@@ -1,7 +1,9 @@
 import { LaunchModel } from "../models/Launch";
 import { SpaceXLaunches } from "./spaceX";
 
-export const getDataFromSpaceX = async () => {
+export const getDataFromSpaceX: () => Promise<
+  "data pushed from spacex api" | "data already updated"
+> = async () => {
   try {
     const launch = (await (
       await fetch("https://api.spacexdata.com/v5/launches/latest")
@@ -17,5 +19,6 @@ export const getDataFromSpaceX = async () => {
     return "data already updated";
   } catch (error) {
     console.log("error = ", error);
+    return error;
   }
 };
