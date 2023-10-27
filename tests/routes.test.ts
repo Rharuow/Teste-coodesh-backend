@@ -7,6 +7,11 @@ describe("Test route home", () => {
     const response = await request(app).get("/");
     return expect(response.statusCode).toBe(200);
   });
+
+  test("It should response 422 when send any query parameters", async () => {
+    const response = await request(app).get("/?anyParameters=anyValue");
+    return expect(response.statusCode).toBe(422);
+  });
 });
 
 describe("Test route to list launches", () => {

@@ -1,6 +1,6 @@
 import { Schema } from "express-validator";
 
-export const schema: Schema = {
+export const validationLaunchSchema: Schema = {
   search: {
     optional: true,
     isString: true,
