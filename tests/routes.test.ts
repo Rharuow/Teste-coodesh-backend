@@ -31,6 +31,11 @@ describe("Test route to list launches", () => {
     );
     return expect(response.statusCode).toBe(422);
   });
+
+  test("It should response 422 if the send invalid params in query params", async () => {
+    const response = await request(app).get("/launches?invalidParam=true");
+    return expect(response.statusCode).toBe(422);
+  });
 });
 
 describe("Test route to stats", () => {
