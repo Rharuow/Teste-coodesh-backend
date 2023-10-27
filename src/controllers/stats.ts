@@ -46,6 +46,11 @@ interface ILaunch {
 }
 
 export const barStats = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty())
+    return res.status(422).json({ errors: errors.array() });
+
   try {
     const rockets = await RocketModel.find();
 
