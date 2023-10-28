@@ -2,7 +2,6 @@ import express from "express";
 import cron from "node-cron";
 import swaggerUi from "swagger-ui-express";
 import ExpressMongoSanitize from "express-mongo-sanitize";
-import { MemoryCache } from "memory-cache-node";
 
 import { connection } from "./db/conn";
 import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI";
@@ -43,10 +42,23 @@ const start = async () => {
 
     // Creating a CRON to update data from spaceX public API get every day at 9:00 AM
     cron.schedule(
-      "0 9 * * *",
+      "25 27 15 * * *",
       async () => {
         // Methods that update data from spaceX public API.
-        await getDataFromSpaceX();
+        console.log(await getDataFromSpaceX());
+      },
+      {
+        scheduled: true,
+        timezone: "America/Sao_Paulo",
+      }
+    );
+
+    // Creating a CRON to update data from spaceX public API get every day at 9:00 AM
+    cron.schedule(
+      "29 27 15 * * *",
+      async () => {
+        // Methods that update data from spaceX public API.
+        console.log(await getDataFromSpaceX());
       },
       {
         scheduled: true,
@@ -63,15 +75,6 @@ const start = async () => {
     process.exit(1);
   }
 };
-
-/* Creates a memory cache for items which has string keys and Launch values. Memory cache checks expiring items every 600 seconds (i.e. every 10 minutes) The maximum number of items in the cache is 1 million. */
-
-// const ITEMSEXPIRATIONCHECKINTERVALINSECS = 10 * 60;
-// const MAXITEMCOUNT = 1000000;
-// const memoryCache = new MemoryCache<string, number>(
-//   ITEMSEXPIRATIONCHECKINTERVALINSECS,
-//   MAXITEMCOUNT
-// );
 
 start();
 
