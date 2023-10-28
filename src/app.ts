@@ -2,6 +2,7 @@ import express from "express";
 import cron from "node-cron";
 import swaggerUi from "swagger-ui-express";
 import ExpressMongoSanitize from "express-mongo-sanitize";
+import { MemoryCache } from "memory-cache-node";
 
 import { connection } from "./db/conn";
 import { getDataFromSpaceX } from "./utils/getDataFromSpaceXAPI";
@@ -19,6 +20,7 @@ const app = express();
 // Adding middleware cores to express services
 app.use(cors());
 
+// middleware to sanitize params sent to mongodb
 app.use(ExpressMongoSanitize());
 
 // Adding middleware to accept json at body requests and limiting 10kb
@@ -61,6 +63,15 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+/* Creates a memory cache for items which has string keys and Launch values. Memory cache checks expiring items every 600 seconds (i.e. every 10 minutes) The maximum number of items in the cache is 1 million. */
+
+// const ITEMSEXPIRATIONCHECKINTERVALINSECS = 10 * 60;
+// const MAXITEMCOUNT = 1000000;
+// const memoryCache = new MemoryCache<string, number>(
+//   ITEMSEXPIRATIONCHECKINTERVALINSECS,
+//   MAXITEMCOUNT
+// );
 
 start();
 
