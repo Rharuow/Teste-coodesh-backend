@@ -42,20 +42,7 @@ const start = async () => {
 
     // Creating a CRON to update data from spaceX public API get every day at 9:00 AM
     cron.schedule(
-      "25 27 15 * * *",
-      async () => {
-        // Methods that update data from spaceX public API.
-        console.log(await getDataFromSpaceX());
-      },
-      {
-        scheduled: true,
-        timezone: "America/Sao_Paulo",
-      }
-    );
-
-    // Creating a CRON to update data from spaceX public API get every day at 9:00 AM
-    cron.schedule(
-      "29 27 15 * * *",
+      " 0 9 * * *",
       async () => {
         // Methods that update data from spaceX public API.
         console.log(await getDataFromSpaceX());
