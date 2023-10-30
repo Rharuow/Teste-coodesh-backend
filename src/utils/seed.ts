@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
 
-import { handleColor } from "./generateColor";
+import { generateRandomColor } from "./generateColor";
 import { SpaceXLaunches } from "./spaceX";
 
 type RocketType = {
@@ -18,7 +18,9 @@ type RocketType = {
   ];
 };
 
-export const seed = async () => {
+export const seed: () => Promise<
+  "launches are loaded" | "launches pushed"
+> = async () => {
   try {
     const launchesMongo = await LaunchModel.find();
 
@@ -44,7 +46,7 @@ export const seed = async () => {
           color:
             rckts.length === 0
               ? "rgb(255,0,0)"
-              : handleColor(rckts[rckts.length - 1].color),
+              : generateRandomColor(rckts[rckts.length - 1].color),
           launches: [
             {
               year: dayjs(current.date_utc).toDate().getFullYear(),
@@ -88,5 +90,6 @@ export const seed = async () => {
     return "launches pushed";
   } catch (error) {
     console.log("error = ", error);
+    return error;
   }
 };

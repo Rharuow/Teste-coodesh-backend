@@ -1,5 +1,5 @@
 Arguments: 
-  /home/rharuow/.nvm/versions/node/v18.17.1/bin/node /home/rharuow/.nvm/versions/node/v18.17.1/bin/yarn add -D @babel/typescript
+  /home/rharuow/.nvm/versions/node/v18.17.1/bin/node /home/rharuow/.nvm/versions/node/v18.17.1/bin/yarn add -D @types/xss-clean
 
 PATH: 
   /home/rharuow/.nvm/versions/node/v18.17.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/share/rvm/bin:/home/rharuow/Documents/Harysson/tibia.x64/Tibia/start-tibia-launcher.sh:/home/rharuow/Android/Sdk/emulator:/home/rharuow/Android/Sdk/tools:/home/rharuow/Android/Sdk/tools/bin:/home/rharuow/Android/Sdk/platform-tools:/usr/share/rvm/bin:/home/rharuow/Documents/Harysson/tibia.x64/Tibia/start-tibia-launcher.sh:/home/rharuow/Android/Sdk/emulator:/home/rharuow/Android/Sdk/tools:/home/rharuow/Android/Sdk/tools/bin:/home/rharuow/Android/Sdk/platform-tools
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel%2ftypescript: Not found
+  Error: https://registry.yarnpkg.com/@types%2fxss-clean: Not found
       at params.callback [as _callback] (/home/rharuow/.nvm/versions/node/v18.17.1/lib/node_modules/yarn/lib/cli.js:66145:18)
       at self.callback (/home/rharuow/.nvm/versions/node/v18.17.1/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:514:28)
@@ -35,7 +35,7 @@ npm manifest:
     "scripts": {
       "dev": "nodemon",
       "build": "npx tsc",
-      "test": "jest --config ./jest.config.js",
+      "test": "jest --runInBand --detectOpenHandles --forceExit --config ./jest.config.js",
       "start": "node build/app.js"
     },
     "keywords": [],
@@ -46,11 +46,13 @@ npm manifest:
       "dayjs": "^1.11.10",
       "dotenv": "^16.3.1",
       "express": "^4.18.2",
+      "express-mongo-sanitize": "^2.2.0",
       "mongoose": "^7.6.3",
       "node-cron": "^3.0.2",
       "node-fetch": "2",
       "remove": "^0.1.5",
-      "swagger-ui-express": "^5.0.0"
+      "swagger-ui-express": "^5.0.0",
+      "xss-clean": "^0.1.4"
     },
     "devDependencies": {
       "@babel/preset-env": "^7.23.2",
@@ -3131,6 +3133,11 @@ Lockfile:
       jest-message-util "^29.7.0"
       jest-util "^29.7.0"
   
+  express-mongo-sanitize@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/express-mongo-sanitize/-/express-mongo-sanitize-2.2.0.tgz#c8c2d45e137f213950f70bf586704e0db5cfe356"
+    integrity sha512-PZBs5nwhD6ek9ZuP+W2xmpvcrHwXZxD5GdieX2dsjPbAbH4azOkrHbycBud2QRU+YQF1CT+pki/lZGedHgo/dQ==
+  
   express@^4.18.2:
     version "4.18.2"
     resolved "https://registry.npmjs.org/express/-/express-4.18.2.tgz"
@@ -6024,6 +6031,18 @@ Lockfile:
     dependencies:
       imurmurhash "^0.1.4"
       signal-exit "^3.0.7"
+  
+  xss-clean@^0.1.4:
+    version "0.1.4"
+    resolved "https://registry.yarnpkg.com/xss-clean/-/xss-clean-0.1.4.tgz#592b7f59cc52d39d4b8c397787243817639fb73d"
+    integrity sha512-4hArTFHYxrifK9VXOu/zFvwjTXVjKByPi6woUHb1IqxlX0Z4xtFBRjOhTKuYV/uE1VswbYsIh5vUEYp7MmoISQ==
+    dependencies:
+      xss-filters "1.2.7"
+  
+  xss-filters@1.2.7:
+    version "1.2.7"
+    resolved "https://registry.yarnpkg.com/xss-filters/-/xss-filters-1.2.7.tgz#59fa1de201f36f2f3470dcac5f58ccc2830b0a9a"
+    integrity sha512-KzcmYT/f+YzcYrYRqw6mXxd25BEZCxBQnf+uXTopQDIhrmiaLwO+f+yLsIvvNlPhYvgff8g3igqrBxYh9k8NbQ==
   
   xtend@^4.0.0:
     version "4.0.2"
