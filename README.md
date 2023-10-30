@@ -3483,9 +3483,16 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 #### root/src/app.ts
 
 - [x] Sanitize params and add comments.
+- [ ] Add tests for this file
 
-  #### root/src/utils/getDataFromSpaceXAPI.ts
+#### root/src/utils/getDataFromSpaceXAPI.ts
 
-  **Optimization and performance**
+**Optimization and performance**
 
-- [ ] Save in memory the last launch registred at mongodb and verify that the launch alredy exists.
+- [x] Save in memory the last launch registred at mongodb and verify that the launch alredy exists.
+- [ ] Add tests for this file.
+
+#### root/src/utils/generateColor.ts
+
+- [ ] Add tests for this file.
+- [ ] Add comments for this file.

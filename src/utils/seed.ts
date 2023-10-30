@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
 
-import { handleColor } from "./generateColor";
+import { generateRandomColor } from "./generateColor";
 import { SpaceXLaunches } from "./spaceX";
 
 type RocketType = {
@@ -46,7 +46,7 @@ export const seed: () => Promise<
           color:
             rckts.length === 0
               ? "rgb(255,0,0)"
-              : handleColor(rckts[rckts.length - 1].color),
+              : generateRandomColor(rckts[rckts.length - 1].color),
           launches: [
             {
               year: dayjs(current.date_utc).toDate().getFullYear(),
