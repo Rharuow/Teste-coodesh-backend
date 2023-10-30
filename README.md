@@ -3494,5 +3494,6 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 
 #### root/src/utils/generateColor.ts
 
-- [ ] Add tests for this file.
-- [ ] Add comments for this file.
+- [x] Isolate colors calculation algorithms
+- [x] Add tests for this file.
+- [x] Add comments for this file.

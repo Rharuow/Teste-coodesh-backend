@@ -7,6 +7,10 @@ afterAll(() => {
   lastLaunches.destroy();
 });
 
+beforeAll((done) => {
+  done();
+});
+
 describe("Test route home", () => {
   test("It should response 200 when call the '/' route", async () => {
     const response = await request(app).get("/");

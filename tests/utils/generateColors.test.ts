@@ -23,4 +23,12 @@ describe("Test to generateRandomColor", () => {
       expect(error).toHaveProperty("message", "Missing RGB components");
     }
   });
+
+  test("should throw Error if the parameter is not a number rgb color component", () => {
+    try {
+      generateRandomColor("rgb(255, 255, abc)");
+    } catch (error) {
+      expect(error).toHaveProperty("message", "parameter must be a number");
+    }
+  });
 });
