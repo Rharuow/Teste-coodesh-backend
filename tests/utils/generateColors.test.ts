@@ -1,4 +1,9 @@
 import { generateRandomColor } from "../../src/utils/generateColor";
+import { lastLaunches } from "../../src/utils/memoryCache";
+
+afterAll(() => {
+  lastLaunches.destroy();
+});
 
 describe("Test to generateRandomColor", () => {
   test("should generate random if parameter is rgb pattern is correct", () => {
