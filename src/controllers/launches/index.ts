@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import { createFilter } from "./utils/createFilter";
 import { LaunchModel } from "../../models/Launch";
+import { validationResult } from "express-validator";
 
 export interface Query {
   search?: string;
@@ -12,6 +13,12 @@ export interface Query {
 
 const index = async (req: Request, res: Response) => {
   const { search, limit = 10, page = 1, results } = req.query as Query;
+
+  // If errors return 422, client didn't provide required values
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
 
   try {
     const launches = await LaunchModel.find(createFilter(search, results))

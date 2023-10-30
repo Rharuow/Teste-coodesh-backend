@@ -6,6 +6,9 @@ module.exports = {
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
   moduleFileExtensions: ["ts", "js", "json", "node"],
   collectCoverage: true,
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest",
+  },
   clearMocks: true,
   coverageDirectory: "coverage",
 };
