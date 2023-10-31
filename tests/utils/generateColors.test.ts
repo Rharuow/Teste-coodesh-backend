@@ -1,8 +1,9 @@
 import { generateRandomColor } from "../../src/utils/generateColor";
 import { lastLaunches } from "../../src/utils/memoryCache";
 
-afterAll(() => {
+afterAll(async () => {
   lastLaunches.destroy();
+  await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
 });
 
 describe("Test to generateRandomColor", () => {

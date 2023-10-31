@@ -3,69 +3,90 @@ import request from "supertest";
 import { app } from "../src/app";
 import { lastLaunches } from "../src/utils/memoryCache";
 
-afterAll(() => {
+afterAll(async () => {
   lastLaunches.destroy();
+  await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
 });
 
 describe("Test route home", () => {
-  test("It should response 200 when call the '/' route", async () => {
-    const response = await request(app).get("/");
-    return expect(response.statusCode).toBe(200);
-  }, 7000);
+  test("It should response 200 when call the '/' route", (done) => {
+    request(app)
+      .get("/")
+      .expect((response) => response.statusCode === 200)
+      .end(done);
+  });
 
-  test("It should response 422 when send any query parameters", async () => {
-    const response = await request(app).get("/?anyParameters=anyValue");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 when send any query parameters", (done) => {
+    request(app)
+      .get("/?anyParameters=anyValue")
+      .expect((response) => response.statusCode === 422)
+      .end(done);
+  });
 });
 
 describe("Test route to list launches", () => {
-  test("It should response 200 when call the launches router without query params", async () => {
-    const response = await request(app).get("/launches");
-    return expect(response.statusCode).toBe(200);
-  }, 7000);
+  test("It should response 200 when call the launches router without query params", (done) => {
+    request(app)
+      .get("/launches")
+      .expect((response) => response.statusCode === 200)
+      .end(done);
+  });
 
-  test("It should response 422 if the limit params not is numeric", async () => {
-    const response = await request(app).get("/launches?limit=isNotNumeric");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if the limit params not is numeric", (done) => {
+    request(app)
+      .get("/launches?limit=isNotNumeric")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 
-  test("It should response 422 if the page params not is numeric", async () => {
-    const response = await request(app).get("/launches?page=isNotNumeric");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if the page params not is numeric", (done) => {
+    request(app)
+      .get("/launches?page=isNotNumeric")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 
-  test("It should response 422 if the results params not is conteined in valid options", async () => {
-    const response = await request(app).get(
-      "/launches?results=isNotConteinedInValidOptions"
-    );
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if the results params not is conteined in valid options", (done) => {
+    request(app)
+      .get("/launches?results=isNotConteinedInValidOptions")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 
-  test("It should response 422 if the send invalid params in query params", async () => {
-    const response = await request(app).get("/launches?invalidParam=true");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if the send invalid params in query params", (done) => {
+    request(app)
+      .get("/launches?invalidParam=true")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 });
 
 describe("Test route to stats", () => {
-  test("It should response 200 when request done about stats pie", async () => {
-    const response = await request(app).get("/stats/pie");
-    return expect(response.statusCode).toBe(200);
-  }, 7000);
+  test("It should response 200 when request done about stats pie", (done) => {
+    request(app)
+      .get("/stats/pie")
+      .expect((response) => response.status === 200)
+      .end(done);
+  });
 
-  test("It should response 422 if send any query params", async () => {
-    const response = await request(app).get("/stats/pie?anyParams=true");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if send any query params", (done) => {
+    request(app)
+      .get("/stats/pie?anyParams=true")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 
-  test("It should response 200 when request done about stats bar", async () => {
-    const response = await request(app).get("/stats/bar");
-    return expect(response.statusCode).toBe(200);
-  }, 7000);
+  test("It should response 200 when request done about stats bar", (done) => {
+    request(app)
+      .get("/stats/bar")
+      .expect((response) => response.status === 200)
+      .end(done);
+  });
 
-  test("It should response 422 if send any query params", async () => {
-    const response = await request(app).get("/stats/bar?anyParams=true");
-    return expect(response.statusCode).toBe(422);
-  }, 7000);
+  test("It should response 422 if send any query params", (done) => {
+    request(app)
+      .get("/stats/bar?anyParams=true")
+      .expect((response) => response.status === 422)
+      .end(done);
+  });
 });
