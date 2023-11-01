@@ -3502,8 +3502,8 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 
 - [x] Isolate fetch data to handle the results of API Space X.
 - [x] Try and catch for fetching data from API Space X.
-- [ ] Create Rocket on isolated function to create a Rocket type.
-- [ ] Create Launch on isolated function to create a Launch type.
-- [ ] Map instead of reduce.
-- [ ] Map instead of foreach.
-- [ ] Create test for this file.
+- [x] Create Rocket on isolated function to create a Rocket type.
+- [x] Create Launch on isolated function to create a Launch type.
+- [x] Map instead of reduce.
+- [x] Map instead of foreach.
+- [x] Create test for this file.
