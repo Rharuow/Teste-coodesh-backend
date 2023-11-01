@@ -10,9 +10,12 @@ export const getDataFromSpaceX: () => Promise<
     // Verifing if has data from space x api on cache
     if (!lastLaunches.hasItem("lastLaunchInSpaceX")) {
       console.log("get launch from SpaceX public API");
-      const launch = (await (
-        await fetch("https://api.spacexdata.com/v5/launches/latest")
-      ).json()) as SpaceXLaunches;
+      const launchData = await fetch(
+        "https://api.spacexdata.com/v5/launches/latest"
+      );
+
+      // parse launch data into json
+      const launch = (await launchData.json()) as SpaceXLaunches;
 
       // Set at cache the data from space x api
       lastLaunches.storeExpiringItem(
