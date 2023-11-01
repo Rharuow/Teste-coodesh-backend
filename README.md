@@ -3500,9 +3500,10 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 
 #### root/src/utils/seed.ts
 
-- [ ] Isolate fetch data to handle the results of API Space X.
-- [ ] Try and catch for fetching data from API Space X.
+- [x] Isolate fetch data to handle the results of API Space X.
+- [x] Try and catch for fetching data from API Space X.
 - [ ] Create Rocket on isolated function to create a Rocket type.
 - [ ] Create Launch on isolated function to create a Launch type.
 - [ ] Map instead of reduce.
 - [ ] Map instead of foreach.
+- [ ] Create test for this file.
