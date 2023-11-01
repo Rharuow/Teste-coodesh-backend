@@ -4,6 +4,8 @@ import { RocketModel } from "../models/Rocket";
 
 import { generateRandomColor } from "./generateColor";
 import { SpaceXLaunches } from "./spaceX";
+import { fetchLaunches } from "./api/spaceX/listLaunches";
+import { fetchRockets } from "./api/spaceX/listRockets";
 
 type RocketType = {
   id: string;
@@ -26,13 +28,9 @@ export const seed: () => Promise<
 
     if (launchesMongo.length > 0) return "launches are loaded";
 
-    const launches = (await (
-      await fetch("https://api.spacexdata.com/v5/launches")
-    ).json()) as Array<SpaceXLaunches>;
+    const launches = await fetchLaunches();
 
-    const rocketsFromSpaceXAPI = (await (
-      await fetch("https://api.spacexdata.com/v4/rockets")
-    ).json()) as Array<{ id: string; name: string }>;
+    const rocketsFromSpaceXAPI = await fetchRockets();
 
     const rockets = launches.reduce((rckts, current) => {
       if (!rckts.some((rcktsLaun) => rcktsLaun.id === current.rocket)) {
