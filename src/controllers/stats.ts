@@ -2,8 +2,15 @@ import { Request, Response } from "express";
 
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
+import { validationResult } from "express-validator";
+import dayjs from "dayjs";
 
 export const pieStats = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty())
+    return res.status(422).json({ errors: errors.array() });
+
   try {
     const rockets = await RocketModel.find();
 
@@ -39,9 +46,41 @@ interface ILaunch {
   color?: string;
 }
 
+type Metadata = {
+  [key: string]: Array<{
+    amountLaunches: 1;
+    launch_id: string;
+    year: number;
+    id: string;
+    name: string;
+    color: string;
+  }>;
+};
+
 export const barStats = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty())
+    return res.status(422).json({ errors: errors.array() });
+
   try {
     const rockets = await RocketModel.find();
+
+    // const launches = await LaunchModel.find();
+
+    // const metadataRefactored: Metadata = {};
+
+    // launches.forEach((launch) => {
+    //   // if not have year key at the metadata object then add it and add the launch
+    //   if (
+    //     !Object.keys(metadataRefactored).includes(
+    //       String(dayjs(launch.date_utc).toDate().getFullYear())
+    //     )
+    //   )
+    //     metadataRefactored[
+    //       String(dayjs(launch.date_utc).toDate().getFullYear())
+    //     ] = [{...launch, amountLaunches: Number(launch.amountLaunches)}];
+    // });
 
     const metadata = rockets.reduce((accLaunchesForYear, currentRocket) => {
       const rocketForYearLuanched = currentRocket.launches.reduce(

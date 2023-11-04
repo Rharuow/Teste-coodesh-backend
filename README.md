@@ -3477,3 +3477,33 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 
 - And finally, get the MONGODB_CONNECTION
   ![last](https://github.com/Rharuow/Teste-coodesh-frontend/assets/19626398/b43864ed-744a-432a-8bd1-cd260e43353e)
+
+### Reviews
+
+#### root/src/app.ts
+
+- [x] Sanitize params and add comments.
+- [ ] Add tests for this file
+
+#### root/src/utils/getDataFromSpaceXAPI.ts
+
+**Optimization and performance**
+
+- [x] Save in memory the last launch registred at mongodb and verify that the launch alredy exists.
+- [x] Add tests for this file.
+
+#### root/src/utils/generateColor.ts
+
+- [x] Isolate colors calculation algorithms
+- [x] Add tests for this file.
+- [x] Add comments for this file.
+
+#### root/src/utils/seed.ts
+
+- [x] Isolate fetch data to handle the results of API Space X.
+- [x] Try and catch for fetching data from API Space X.
+- [x] Create Rocket on isolated function to create a Rocket type.
+- [x] Create Launch on isolated function to create a Launch type.
+- [x] Map instead of reduce.
+- [x] Map instead of foreach.
+- [x] Create test for this file.
