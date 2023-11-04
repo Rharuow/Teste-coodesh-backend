@@ -16,7 +16,7 @@ export const swaggerDef = {
       description: "If you run this project locally",
     },
     {
-      url: "https://unkow-yet",
+      url: "https://coodesh-test-spacex-api.onrender.com",
       description: "To access routes in production",
     },
   ],
