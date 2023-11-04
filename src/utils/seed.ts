@@ -8,9 +8,9 @@ export const seed: () => Promise<
   "launches are loaded" | "launches pushed"
 > = async () => {
   try {
-    const launchesMongo = await LaunchModel.count();
+    const totalLaunches = await LaunchModel.count();
 
-    if (launchesMongo > 0) return "launches are loaded";
+    if (totalLaunches > 0) return "launches are loaded";
 
     const launchesFromSpaceXAPI = await fetchLaunches();
 
@@ -33,6 +33,6 @@ export const seed: () => Promise<
     return "launches pushed";
   } catch (error) {
     console.log("error = ", error);
-    return error;
+    throw new Error(error.message);
   }
 };

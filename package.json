@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "npx tsc",
-    "test": "jest --forceExit --config ./jest.config.js",
+    "test": "env SUPPRESS_JEST_WARNINGS=1 && jest --forceExit --config ./jest.config.js",
     "start": "node build/app.js"
   },
   "keywords": [],
@@ -40,6 +40,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "jest": "^29.7.0",
+    "mockingoose": "^2.16.2",
     "nodemon": "^3.0.1",
     "superagent": "^8.1.2",
     "supertest": "^6.3.3",
