@@ -6,7 +6,6 @@ export const generateRandomColor: (colorRGB: string) => string = (
 
     return `rgb(${r}, ${g}, ${b})`;
   } catch (error) {
-    console.log("generateRandomColor = ", error);
     throw new Error(error.message);
   }
 };
