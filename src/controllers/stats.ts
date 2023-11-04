@@ -66,11 +66,12 @@ export const barStats = async (req: Request, res: Response) => {
   try {
     const rockets = await RocketModel.find();
 
-    const launches = await LaunchModel.find();
+    // const launches = await LaunchModel.find();
 
-    const metadataRefactored: Metadata = {};
+    // const metadataRefactored: Metadata = {};
 
     // launches.forEach((launch) => {
+    //   // if not have year key at the metadata object then add it and add the launch
     //   if (
     //     !Object.keys(metadataRefactored).includes(
     //       String(dayjs(launch.date_utc).toDate().getFullYear())
