@@ -20,20 +20,31 @@ export const seed: () => Promise<
     const rocketsFromSpaceXAPI = await fetchRockets(launchesFromSpaceXAPI);
 
     // save at mongo database all the launches
-    await LaunchModel.insertMany(
+    await LaunchModel.bulkWrite(
       launchesFromSpaceXAPI.map((launch) => ({
-        ...launch,
-        rocket: {
-          name: rocketsFromSpaceXAPI.find(
-            (rocket) => rocket.id === launch.rocket
-          )?.name,
-          id: launch.rocket,
+        insertOne: {
+          document: {
+            ...launch,
+            rocket: {
+              name: rocketsFromSpaceXAPI.find(
+                (rocket) => rocket.id === launch.rocket
+              ).name,
+              id: launch.rocket,
+            },
+          },
         },
       }))
     );
 
     // save at mongo database all the rockets
-    await RocketModel.insertMany(rocketsFromSpaceXAPI);
+
+    await RocketModel.bulkWrite(
+      rocketsFromSpaceXAPI.map((rocket) => ({
+        insertOne: {
+          document: rocket,
+        },
+      }))
+    );
 
     return "launches pushed";
   } catch (error) {

@@ -3507,3 +3507,5 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 - [x] Map instead of reduce.
 - [x] Map instead of foreach.
 - [x] Create test for this file.
+- [x] Using bulkWrite of mongoose.
+- [ ] Memory management to reduce API Space X calls.
