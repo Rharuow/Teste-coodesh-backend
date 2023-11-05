@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { LaunchModel, LaunchSchema } from "../../models/Launch";
 import { RocketModel, RocketsSchema } from "../../models/Rocket";
 import { validationResult } from "express-validator";
-import dayjs from "dayjs";
 import { generateMetadata } from "./utils/generateMetadata";
 
 export const pieStats = async (req: Request, res: Response) => {
@@ -30,7 +29,6 @@ export const pieStats = async (req: Request, res: Response) => {
       metadata: { success, fails, rocketsTotal: rockets.length },
     });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({
       message:
         "Sorry, there was an error generating the rocket pizza statistics",
@@ -77,7 +75,6 @@ export const barStats = async (req: Request, res: Response) => {
       metadata,
     });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({
       message: "Sorry, there was an error generating the rocket bar stats",
     });

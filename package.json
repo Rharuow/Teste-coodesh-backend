@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "npx tsc",
-    "test": "env SUPPRESS_JEST_WARNINGS=1 && jest --forceExit --config ./jest.config.js",
+    "test": "jest --forceExit --config ./jest.config.js",
     "start": "node build/app.js"
   },
   "keywords": [],

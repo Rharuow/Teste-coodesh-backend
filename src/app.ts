@@ -45,7 +45,7 @@ const start = async () => {
       " 0 9 * * *",
       async () => {
         // Methods that update data from spaceX public API.
-        console.log(await getDataFromSpaceX());
+        await getDataFromSpaceX();
       },
       {
         scheduled: true,

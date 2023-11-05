@@ -41,7 +41,6 @@ const index = async (req: Request, res: Response) => {
       hasPrev: page > 1,
     });
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json({ message: "Sorry, there was an error listing the releases" });

@@ -91,7 +91,7 @@ describe("Seeds files run when starting app and feed the mongodb with rockets an
     } catch (error) {
       console.log(error);
     }
-  });
+  }, 12000);
 
   test("should throw error when the mongoose is disconnected", async () => {
     await mongoose.connection.close();

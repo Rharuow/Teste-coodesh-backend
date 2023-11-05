@@ -37,7 +37,6 @@ export const seed: () => Promise<
 
     return "launches pushed";
   } catch (error) {
-    console.log("error = ", error);
     throw new Error(error.message);
   }
 };
