@@ -13,6 +13,17 @@ const rocketsSchema = new Schema({
   ],
 });
 
+type RocketsSchema = {
+  id: string;
+  name: string;
+  color: string;
+  launches: Array<{
+    year: string;
+    success: boolean;
+    id: string;
+  }>;
+};
+
 const RocketModel = model("Rockets", rocketsSchema);
 
-export { RocketModel, rocketsSchema };
+export { RocketModel, rocketsSchema, RocketsSchema };

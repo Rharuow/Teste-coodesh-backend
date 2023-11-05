@@ -9,7 +9,6 @@ export const getDataFromSpaceX: () => Promise<
   try {
     // Verifing if has data from space x api on cache
     if (!lastLaunches.hasItem("lastLaunchInSpaceX")) {
-      console.log("get launch from SpaceX public API");
       const launchData = await fetch(
         "https://api.spacexdata.com/v5/launches/latest"
       );
@@ -27,7 +26,6 @@ export const getDataFromSpaceX: () => Promise<
 
     // Verifing if has data from mongoDB on cache
     if (!lastLaunches.hasItem("lastLaunchInDB")) {
-      console.log("Request by DB");
       lastLaunches.storePermanentItem(
         "lastLaunchInDB",
         await LaunchModel.findOne({
@@ -49,7 +47,6 @@ export const getDataFromSpaceX: () => Promise<
 
     return "data already updated";
   } catch (error) {
-    console.log("error = ", error);
     return error;
   }
 };

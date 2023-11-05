@@ -8,14 +8,18 @@ export const seed: () => Promise<
   "launches are loaded" | "launches pushed"
 > = async () => {
   try {
-    const launchesMongo = await LaunchModel.count();
+    // get amount of Launches
+    const totalLaunches = await LaunchModel.count();
 
-    if (launchesMongo > 0) return "launches are loaded";
+    if (totalLaunches > 0) return "launches are loaded";
 
+    // get launches from public api SpaceX
     const launchesFromSpaceXAPI = await fetchLaunches();
 
+    // get rockets from public api SpaceX
     const rocketsFromSpaceXAPI = await fetchRockets(launchesFromSpaceXAPI);
 
+    // save at mongo database all the launches
     await LaunchModel.insertMany(
       launchesFromSpaceXAPI.map((launch) => ({
         ...launch,
@@ -28,11 +32,11 @@ export const seed: () => Promise<
       }))
     );
 
+    // save at mongo database all the rockets
     await RocketModel.insertMany(rocketsFromSpaceXAPI);
 
     return "launches pushed";
   } catch (error) {
-    console.log("error = ", error);
-    return error;
+    throw new Error(error.message);
   }
 };
