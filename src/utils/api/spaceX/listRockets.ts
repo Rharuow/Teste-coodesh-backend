@@ -40,7 +40,7 @@ export const fetchRockets: (
       launches: launches
         .filter((launch) => launch.rocket === rocket.id)
         .map((launch) => ({
-          year: dayjs(launch.date_utc).toDate().getFullYear(),
+          year: dayjs(launch.date_utc).toDate().getFullYear().toString(),
           success: launch.success ? true : false,
           id: launch.id,
         })),

@@ -72,7 +72,7 @@ export type RocketType = {
   color: string;
   launches: [
     {
-      year: string | number;
+      year: string;
       success: boolean;
       id: string;
     }
