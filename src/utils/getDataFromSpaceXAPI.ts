@@ -1,6 +1,6 @@
 import { LaunchModel } from "../models/Launch";
 import { SpaceXLaunches } from "./spaceX";
-import { lastLaunches } from "./memoryCache";
+import { lastLaunchesInMemory } from "./memoryCache";
 
 // Methods to get data from space x public api
 export const getDataFromSpaceX: () => Promise<
@@ -8,7 +8,7 @@ export const getDataFromSpaceX: () => Promise<
 > = async () => {
   try {
     // Verifing if has data from space x api on cache
-    if (!lastLaunches.hasItem("lastLaunchInSpaceX")) {
+    if (!lastLaunchesInMemory.hasItem("lastLaunchInSpaceX")) {
       const launchData = await fetch(
         "https://api.spacexdata.com/v5/launches/latest"
       );
@@ -17,7 +17,7 @@ export const getDataFromSpaceX: () => Promise<
       const launch = (await launchData.json()) as SpaceXLaunches;
 
       // Set at cache the data from space x api
-      lastLaunches.storeExpiringItem(
+      lastLaunchesInMemory.storeExpiringItem(
         "lastLaunchInSpaceX",
         launch,
         60 * 60 /* 1 hour */
@@ -25,22 +25,22 @@ export const getDataFromSpaceX: () => Promise<
     }
 
     // Verifing if has data from mongoDB on cache
-    if (!lastLaunches.hasItem("lastLaunchInDB")) {
-      lastLaunches.storePermanentItem(
+    if (!lastLaunchesInMemory.hasItem("lastLaunchInDB")) {
+      lastLaunchesInMemory.storePermanentItem(
         "lastLaunchInDB",
         await LaunchModel.findOne({
-          id: lastLaunches.retrieveItemValue("lastLaunchInSpaceX").id,
+          id: lastLaunchesInMemory.retrieveItemValue("lastLaunchInSpaceX").id,
         })
       );
     }
 
     const launchAlreadyExists =
-      lastLaunches.retrieveItemValue("lastLaunchInDB");
+      lastLaunchesInMemory.retrieveItemValue("lastLaunchInDB");
 
     // if dont exist, create
     if (launchAlreadyExists === null) {
       await LaunchModel.create(
-        lastLaunches.retrieveItemValue("lastLaunchInSpaceX")
+        lastLaunchesInMemory.retrieveItemValue("lastLaunchInSpaceX")
       );
       return "data pushed from spacex api";
     }
