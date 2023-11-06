@@ -2,10 +2,10 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import { app } from "../src/app";
-import { lastLaunches } from "../src/utils/memoryCache";
+import { lastLaunchesInMemory } from "../src/utils/memoryCache";
 
 afterAll(async () => {
-  lastLaunches.destroy();
+  lastLaunchesInMemory.destroy();
   await mongoose.connection.close();
   // await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
 });
