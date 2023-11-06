@@ -1,18 +1,10 @@
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
+import { getAmountLaunchesInDB } from "../repositories/launch";
 
 import { fetchLaunches } from "./api/spaceX/listLaunches";
 import { fetchRockets } from "./api/spaceX/listRockets";
 import { amountLaunchesInMemory } from "./memoryCache";
-
-export const getAmountLaunchesInDB = async () => {
-  if (!amountLaunchesInMemory.hasItem("totalLaunchesInDB")) {
-    const total = await LaunchModel.count();
-    // storeExpiringItem(key: string, value: number, timeToLiveInSecs: number)
-    amountLaunchesInMemory.storeExpiringItem("totalLaunchesInDB", total, 10);
-  }
-  return amountLaunchesInMemory.retrieveItemValue("totalLaunchesInDB");
-};
 
 export const seed: () => Promise<
   "launches are loaded" | "launches pushed"

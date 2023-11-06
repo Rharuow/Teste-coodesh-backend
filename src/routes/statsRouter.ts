@@ -5,12 +5,14 @@ import {
   validationStatsBarSchemes,
   validationStatsPieSchemes,
 } from "./validations";
+import { resultValidationParams } from "../middleware/stats/pie";
 
 const statsRouter = express.Router();
 
 statsRouter.get(
   "/pie",
   checkExact(checkSchema(validationStatsPieSchemes)),
+  (req, res, next) => resultValidationParams(req, res, next),
   pieStats
 );
 statsRouter.get(

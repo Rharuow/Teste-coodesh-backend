@@ -28,7 +28,7 @@ const index = async (req: Request, res: Response) => {
 
     const launchesCount = await LaunchModel.find(
       createFilter(search, results)
-    ).count();
+    ).countDocuments();
 
     const totalPages = Math.ceil(launchesCount / limit);
 

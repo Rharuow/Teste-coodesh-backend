@@ -1,13 +1,10 @@
 import request from "supertest";
-import mongoose from "mongoose";
 
 import { app } from "../src/app";
 import { lastLaunchesInMemory } from "../src/utils/memoryCache";
 
-afterAll(async () => {
+afterAll(() => {
   lastLaunchesInMemory.destroy();
-  // await mongoose.connection.close();
-  // await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
 });
 
 describe("Test route home", () => {

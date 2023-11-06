@@ -15,7 +15,7 @@ afterAll(() => {
   process.env.MONGODB_CONNECTION_TEST = environmentMemory.retrieveItemValue(
     "MONGODB_CONNECTION_TEST"
   );
-  // environmentMemory.destroy();
+  environmentMemory.destroy();
 });
 
 describe("Testing connection middleware express", () => {

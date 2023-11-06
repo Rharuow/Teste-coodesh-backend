@@ -1,20 +1,16 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
 import { LaunchModel, LaunchSchema } from "../../models/Launch";
 import { RocketModel, RocketsSchema } from "../../models/Rocket";
-import { validationResult } from "express-validator";
 import { generateMetadata } from "./utils/generateMetadata";
+import { getAmountLaunchesInDB } from "../../repositories/launch";
 
-export const pieStats = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty())
-    return res.status(422).json({ errors: errors.array() });
-
+export const pieStats = async (_: Request, res: Response) => {
   try {
     const rockets = await RocketModel.find();
 
-    const totalLaunches = await LaunchModel.count();
+    const totalLaunches = await getAmountLaunchesInDB();
 
     const success = rockets
       .map(
