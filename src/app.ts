@@ -31,12 +31,19 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDef));
 // Adding middleware to instance of all the routes.
 app.use("/", router);
 
-// Methods to start server.
-const start = async () => {
+app.use(async (req, res, next) => {
   try {
     // Creating connection at mongoDb
     await connection();
+    return next();
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
 
+// Methods to start server.
+const start = async () => {
+  try {
     // Feeding the db with spaceX public API
     await seed();
 

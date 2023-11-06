@@ -24,3 +24,5 @@ export const amountLaunchesInMemory = new MemoryCache<string, number>(
   10, // time in seconds to expire items
   1 // number of items
 );
+
+export const environmentMemory = new MemoryCache<string, string>(1, 1); // (itemsExpirationCheckIntervalInSecs: number, maxItemCount: number)

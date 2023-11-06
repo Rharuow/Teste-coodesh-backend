@@ -1,6 +1,7 @@
 import "dotenv/config";
 import mongoose from "mongoose";
 
+//  methods to make connection to MongoDB
 async function connection() {
   try {
     mongoose.set("strictQuery", true);
