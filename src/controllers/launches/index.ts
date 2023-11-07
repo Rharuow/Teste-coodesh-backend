@@ -1,15 +1,11 @@
+import "module-alias/register";
 import { Request, Response } from "express";
-
-import { createFilter } from "./utils/createFilter";
-import { LaunchModel } from "../../models/Launch";
 import { validationResult } from "express-validator";
-
-export interface Query {
-  search?: string;
-  results?: "success" | "fail";
-  limit?: number;
-  page?: number;
-}
+import { Query } from "../../repositories/launch/utils/createFilter";
+import {
+  getAmountLaunchesInDB,
+  listFiltredLaunches,
+} from "../../repositories/launch";
 
 const index = async (req: Request, res: Response) => {
   const { search, limit = 10, page = 1, results } = req.query as Query;
@@ -21,14 +17,9 @@ const index = async (req: Request, res: Response) => {
   }
 
   try {
-    const launches = await LaunchModel.find(createFilter(search, results))
-      .sort({ id: "desc" })
-      .limit(limit)
-      .skip((page - 1) * limit);
+    const launches = await listFiltredLaunches(req.query);
 
-    const launchesCount = await LaunchModel.find(
-      createFilter(search, results)
-    ).countDocuments();
+    const launchesCount = await getAmountLaunchesInDB({ search, results });
 
     const totalPages = Math.ceil(launchesCount / limit);
 
@@ -41,6 +32,7 @@ const index = async (req: Request, res: Response) => {
       hasPrev: page > 1,
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
       .json({ message: "Sorry, there was an error listing the releases" });

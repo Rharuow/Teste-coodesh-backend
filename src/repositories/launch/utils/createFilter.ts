@@ -1,4 +1,9 @@
-import { Query } from "..";
+export interface Query {
+  search?: string;
+  results?: "success" | "fail";
+  limit?: number;
+  page?: number;
+}
 
 export const createFilter = (search?: string, results?: Query["results"]) => {
   if (search && results !== undefined)

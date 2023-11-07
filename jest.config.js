@@ -11,6 +11,9 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
+  moduleNameMapper: {
+    "^@repositories$": "<rootDir>/src/repositories",
+  },
   clearMocks: true,
   coverageDirectory: "coverage",
 };
