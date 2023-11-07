@@ -5,10 +5,11 @@ import { LaunchModel, LaunchSchema } from "../../models/Launch";
 import { RocketModel, RocketsSchema } from "../../models/Rocket";
 import { generateMetadata } from "./utils/generateMetadata";
 import { getAmountLaunchesInDB } from "../../repositories/launch";
+import { listRockets } from "../../repositories/rocket/list";
 
 export const pieStats = async (_: Request, res: Response) => {
   try {
-    const rockets = await RocketModel.find();
+    const rockets = await listRockets();
 
     const totalLaunches = await getAmountLaunchesInDB();
 
