@@ -19,6 +19,15 @@
       "@repositories/*": [
         "./src/repositories/*"
       ],
+      "@middleware/*": [
+        "./src/middleware/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@controllers/*": [
+        "./src/controllers/*"
+      ],
       "@/*": [
         "./src/*"
       ]
