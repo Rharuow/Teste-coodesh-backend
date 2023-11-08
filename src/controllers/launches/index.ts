@@ -5,6 +5,7 @@ import {
   getAmountLaunchesInDB,
   listFiltredLaunches,
 } from "../../repositories/launch";
+import { launchesService } from "../../services/launchesService";
 
 const index = async (req: Request, res: Response) => {
   // Permitted query parameters
@@ -17,17 +18,9 @@ const index = async (req: Request, res: Response) => {
     // amount of filtered launches
     const launchesCount = await getAmountLaunchesInDB({ search, results });
 
-    // Calculate total number of pages
-    const totalPages = Math.ceil(launchesCount / limit);
-
-    return res.json({
-      results: launches,
-      totalDocs: launchesCount,
-      totalPages,
-      page: page,
-      hasNext: totalPages > page,
-      hasPrev: page > 1,
-    });
+    return res.json(
+      launchesService({ launches, launchesCount, params: { limit, page } })
+    );
   } catch (error) {
     console.log(error);
     return res
