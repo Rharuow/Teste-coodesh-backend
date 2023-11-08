@@ -3509,3 +3509,6 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 - [x] Create test for this file.
 - [x] Using bulkWrite of mongoose.
 - [x] Memory management to reduce API Space X calls.
+- [x] Layer Service
+- [x] Layer Repository
+- [ ] 100% of the test coverage
