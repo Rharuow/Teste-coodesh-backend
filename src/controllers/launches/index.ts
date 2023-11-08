@@ -18,11 +18,11 @@ const index = async (req: Request, res: Response) => {
     // amount of filtered launches
     const launchesCount = await getAmountLaunchesInDB({ search, results });
 
+    // service layer list launches
     return res.json(
       launchesService({ launches, launchesCount, params: { limit, page } })
     );
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json({ message: "Sorry, there was an error listing the releases" });

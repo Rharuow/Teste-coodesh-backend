@@ -8,6 +8,7 @@ import {
   listFiltredLaunches,
 } from "../../repositories/launch";
 import { listRockets } from "../../repositories/rocket/list";
+import { pieService } from "../../services/stats/pieService";
 
 export const pieStats = async (_: Request, res: Response) => {
   try {
@@ -15,18 +16,8 @@ export const pieStats = async (_: Request, res: Response) => {
 
     const totalLaunches = await getAmountLaunchesInDB();
 
-    const success = rockets
-      .map(
-        (rocket) => rocket.launches.filter((launch) => launch.success).length
-      )
-      .reduce((acc, current) => acc + current, 0);
-
-    const fails = totalLaunches - success;
-
-    return res.json({
-      rockets,
-      metadata: { success, fails, rocketsTotal: rockets.length },
-    });
+    // service layer handle the rockets and totalLaunches
+    return res.json(pieService({ rockets, totalLaunches }));
   } catch (error) {
     return res.status(400).json({
       message:
