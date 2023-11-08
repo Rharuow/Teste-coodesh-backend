@@ -19,19 +19,20 @@ export const getAmountLaunchesInDB = async (params?: {
   return amountLaunchesInMemory.retrieveItemValue("totalLaunchesInDB");
 };
 
-export const listFiltredLaunches = async (params: Query) => {
-  const { limit = 10, page = 1, results, search } = params;
-  if (!launchesInDBInMemory.hasItem(`launches-${search}`)) {
-    const launches = await LaunchModel.find(createFilter(search, results))
+export const listFiltredLaunches = async (params?: Query) => {
+  if (!launchesInDBInMemory.hasItem(`launches-${params?.search}`)) {
+    const launches = await LaunchModel.find(
+      createFilter(params?.search, params?.results)
+    )
       .sort({ id: "desc" })
-      .limit(limit)
-      .skip((page - 1) * limit);
+      .limit(params?.limit)
+      .skip((params?.page - 1) * params?.limit);
 
     launchesInDBInMemory.storeExpiringItem(
-      `launches-${search}`,
+      `launches-${params?.search}`,
       launches as Array<LaunchSchema>,
       10
     );
   }
-  return launchesInDBInMemory.retrieveItemValue(`launches-${search}`);
+  return launchesInDBInMemory.retrieveItemValue(`launches-${params?.search}`);
 };

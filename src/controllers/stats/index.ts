@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 
-import { LaunchModel, LaunchSchema } from "../../models/Launch";
-import { RocketModel, RocketsSchema } from "../../models/Rocket";
+import { LaunchSchema } from "../../models/Launch";
+import { RocketsSchema } from "../../models/Rocket";
 import { generateMetadata } from "./utils/generateMetadata";
-import { getAmountLaunchesInDB } from "../../repositories/launch";
+import {
+  getAmountLaunchesInDB,
+  listFiltredLaunches,
+} from "../../repositories/launch";
 import { listRockets } from "../../repositories/rocket/list";
 
 export const pieStats = async (_: Request, res: Response) => {
@@ -46,15 +48,10 @@ export type Metadata = {
 };
 
 export const barStats = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty())
-    return res.status(422).json({ errors: errors.array() });
-
   try {
-    const rockets = await RocketModel.find();
+    const rockets = await listRockets();
 
-    const launches = await LaunchModel.find();
+    const launches = await listFiltredLaunches();
 
     const metadata: Metadata = generateMetadata(
       launches as Array<LaunchSchema>,

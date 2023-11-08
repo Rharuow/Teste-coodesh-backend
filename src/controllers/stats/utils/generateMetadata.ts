@@ -26,7 +26,8 @@ export const generateMetadata = (
         {
           amountLaunches: 1,
           name: launch.rocket.name,
-          color: rockets.find((rocket) => rocket.id === launch.rocket.id).color,
+          color: rockets.find((rocket) => rocket.id === launch.rocket.id)
+            ?.color,
           id: launch.rocket.id,
           year,
         },
@@ -48,7 +49,8 @@ export const generateMetadata = (
         metadata[year].push({
           amountLaunches: 1,
           name: launch.rocket.name,
-          color: rockets.find((rocket) => rocket.id === launch.rocket.id).color,
+          color: rockets.find((rocket) => rocket.id === launch.rocket.id)
+            ?.color,
           id: launch.rocket.id,
           year,
         });

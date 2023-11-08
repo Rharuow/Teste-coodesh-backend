@@ -28,8 +28,11 @@ app.use(ExpressMongoSanitize());
 app.use(express.json({ limit: "10kb" }));
 
 app.use((_, res, next) => {
-  if (mongoose.connection.readyState !== 1)
-    return res.status(500).send("DB connection lost");
+  if (
+    mongoose.connection.readyState > 2 &&
+    mongoose.connection.readyState === 0
+  )
+    return res.status(412).send("DB connection lost");
   return next();
 });
 

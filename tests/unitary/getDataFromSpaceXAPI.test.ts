@@ -6,7 +6,6 @@ import { lastLaunchesInMemory } from "../../src/utils/memoryCache";
 afterAll(async () => {
   lastLaunchesInMemory.destroy();
   await mongoose.connection.close();
-  // await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
 });
 
 beforeAll(async () => {
