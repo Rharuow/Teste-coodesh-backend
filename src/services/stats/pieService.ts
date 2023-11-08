@@ -1,4 +1,4 @@
-import { pieSerializer } from "../../serializer/stats/pie";
+import { pieSerializer } from "../../serializer/stats/pieSerializer";
 import { RocketsSchema } from "../../models/Rocket";
 
 export const pieService = ({

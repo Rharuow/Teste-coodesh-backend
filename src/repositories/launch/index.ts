@@ -19,7 +19,7 @@ export const getAmountLaunchesInDB = async (params?: {
   return amountLaunchesInMemory.retrieveItemValue("totalLaunchesInDB");
 };
 
-export const listFiltredLaunches = async (params?: Query) => {
+export const listLaunches = async (params?: Query) => {
   if (!launchesInDBInMemory.hasItem(`launches-${params?.search}`)) {
     const launches = await LaunchModel.find(
       createFilter(params?.search, params?.results)

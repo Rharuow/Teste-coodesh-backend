@@ -1,10 +1,7 @@
 import "module-alias/register";
 import { Request, Response } from "express";
 import { Query } from "../../repositories/launch/utils/createFilter";
-import {
-  getAmountLaunchesInDB,
-  listFiltredLaunches,
-} from "../../repositories/launch";
+import { getAmountLaunchesInDB, listLaunches } from "../../repositories/launch";
 import { launchesService } from "../../services/launchesService";
 
 const index = async (req: Request, res: Response) => {
@@ -13,7 +10,7 @@ const index = async (req: Request, res: Response) => {
 
   try {
     // List filtered launches
-    const launches = await listFiltredLaunches(req.query);
+    const launches = await listLaunches(req.query);
 
     // amount of filtered launches
     const launchesCount = await getAmountLaunchesInDB({ search, results });

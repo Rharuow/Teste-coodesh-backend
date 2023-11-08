@@ -1,6 +1,6 @@
 import { Query } from "../repositories/launch/utils/createFilter";
 import { LaunchSchema } from "../models/Launch";
-import { listLaunchesSerializer } from "../serializer/launches";
+import { listLaunchesSerializer } from "../serializer/launchesSerializer";
 
 export const launchesService = ({
   launches,
