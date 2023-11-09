@@ -1,13 +1,26 @@
 import mongoose from "mongoose";
 import { connection } from "../../src/db/conn";
+import { environmentMemory } from "../../src/utils/memoryCache";
+
+beforeAll(() => {
+  environmentMemory.storePermanentItem(
+    "MONGODB_CONNECTION_TEST",
+    String(process.env.MONGODB_CONNECTION_TEST)
+  );
+});
 
 afterAll(async () => {
+  process.env.MONGODB_CONNECTION_TEST = environmentMemory.retrieveItemValue(
+    "MONGODB_CONNECTION_TEST"
+  );
+  environmentMemory.destroy();
   await mongoose.connection.close();
 });
 
 describe("When the connection with mongodb is established", () => {
   test("should connect when the connection is established", async () => {
-    expect(await connection()).resolves;
+    const readyState = (await connection()).connection.readyState;
+    return expect(readyState).toBe(1);
   });
 
   test("should throw when the env variable is not set", async () => {

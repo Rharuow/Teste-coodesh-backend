@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "npx tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "test": "jest --forceExit --config ./jest.config.js",
+    "test": "jest --runInBand --forceExit --config ./jest.config.js",
     "start": "node build/app.js"
   },
   "_moduleAliases": {

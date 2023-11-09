@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
 import { connection } from "../../src/db/conn";
 import { getDataFromSpaceX } from "../../src/utils/getDataFromSpaceXAPI";
-import { lastLaunchesInMemory } from "../../src/utils/memoryCache";
+import {
+  amountLaunchesInMemory,
+  lastLaunchesInMemory,
+  launchesInMemory,
+  rocketsInMemory,
+} from "../../src/utils/memoryCache";
 
 afterAll(async () => {
-  lastLaunchesInMemory.destroy();
+  lastLaunchesInMemory.clear();
+  amountLaunchesInMemory.clear();
+  launchesInMemory.clear();
+  rocketsInMemory.clear();
   await mongoose.connection.close();
 });
 

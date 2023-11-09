@@ -1,10 +1,20 @@
 import request from "supertest";
 
-import { app } from "../src/app";
-import { lastLaunchesInMemory } from "../src/utils/memoryCache";
+import { app } from "../../src/app";
+import {
+  amountLaunchesInMemory,
+  lastLaunchesInMemory,
+  launchesInMemory,
+  rocketsInMemory,
+} from "../../src/utils/memoryCache";
+import mongoose from "mongoose";
 
-afterAll(() => {
-  lastLaunchesInMemory.destroy();
+afterAll(async () => {
+  await mongoose.connection.close();
+  lastLaunchesInMemory.clear();
+  amountLaunchesInMemory.clear();
+  launchesInMemory.clear();
+  rocketsInMemory.clear();
 });
 
 describe("Test route home", () => {
@@ -28,15 +38,14 @@ describe("Test route to list launches", () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        console.log("launches", res.body);
         expect(res.body.results.length).toBe(0);
         done();
       });
   });
 
-  test("It should response 200 and return empty array when call the launches router with query params 'search' with value 'Heavy'", (done) => {
+  test("It should response 200 and return array with length greater than 0 when call the launches router with query params 'search' with value 'Falcon'", (done) => {
     request(app)
-      .get("/launches?search=1")
+      .get("/launches?search=Falcon")
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);

@@ -4,6 +4,7 @@ import { connection } from "../../src/db/conn";
 import { seed } from "../../src/utils/seed";
 import {
   amountLaunchesInMemory,
+  lastLaunchesInMemory,
   launchesInMemory,
   rocketsInMemory,
 } from "../../src/utils/memoryCache";
@@ -12,6 +13,7 @@ beforeAll(async () => {
   await connection();
   await mongoose.connection.db.dropCollection("launches");
   await mongoose.connection.db.dropCollection("rockets");
+  lastLaunchesInMemory.clear();
   amountLaunchesInMemory.clear();
   launchesInMemory.clear();
   rocketsInMemory.clear();
@@ -19,6 +21,10 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await mongoose.connection.close();
+  lastLaunchesInMemory.clear();
+  amountLaunchesInMemory.clear();
+  launchesInMemory.clear();
+  rocketsInMemory.clear();
 });
 
 describe("Seeds files run when starting app and feed the mongodb with rockets and launches", () => {

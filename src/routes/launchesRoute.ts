@@ -8,9 +8,11 @@ const launchesRouter = express.Router();
 
 launchesRouter.get(
   "/",
+  // Middleware to check each launch request query parameters
   checkExact(checkSchema(validationLaunchSchema), {
     message: "Param not permitted",
   }),
+  // Middleware to make validation of the previous step has some error
   (req, res, next) => validationQueryParams(req, res, next),
   launchesList
 );

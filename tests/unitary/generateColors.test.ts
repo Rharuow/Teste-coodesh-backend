@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 import { generateRandomColor } from "../../src/utils/generateColor";
-import { lastLaunchesInMemory } from "../../src/utils/memoryCache";
+import {
+  amountLaunchesInMemory,
+  lastLaunchesInMemory,
+  launchesInMemory,
+  rocketsInMemory,
+} from "../../src/utils/memoryCache";
 
 afterAll(async () => {
-  lastLaunchesInMemory.destroy();
+  lastLaunchesInMemory.clear();
+  amountLaunchesInMemory.clear();
+  launchesInMemory.clear();
+  rocketsInMemory.clear();
   await mongoose.connection.close();
 });
 
