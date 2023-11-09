@@ -22,6 +22,29 @@ describe("Test route to list launches", () => {
     request(app).get("/launches").expect(200, done);
   });
 
+  test("It should response 200 and return empty array when call the launches router with query params 'search' with value 'Heavy'", (done) => {
+    request(app)
+      .get("/launches?search=Heavy")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log("launches", res.body);
+        expect(res.body.results.length).toBe(0);
+        done();
+      });
+  });
+
+  test("It should response 200 and return empty array when call the launches router with query params 'search' with value 'Heavy'", (done) => {
+    request(app)
+      .get("/launches?search=1")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.results.length).toBeGreaterThan(0);
+        done();
+      });
+  });
+
   test("It should response 422 if the limit params not is numeric", (done) => {
     request(app).get("/launches?limit=isNotNumeric").expect(422, done);
   });

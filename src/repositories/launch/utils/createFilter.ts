@@ -6,30 +6,20 @@ export interface Query {
 }
 
 export const createFilter = (search?: string, results?: Query["results"]) => {
-  if (search && results !== undefined)
-    return {
-      $and: [
-        results === "success"
-          ? { success: true }
-          : { $or: [{ success: false }, { success: null }] },
-        {
-          $or: [
-            { name: { $regex: ".*" + search + ".*" } },
-            { "rocket.name": { $regex: ".*" + search + ".*" } },
-          ],
-        },
-      ],
-    };
-  if (search && results === undefined)
-    return {
-      $or: [
-        { name: { $regex: ".*" + search + ".*" } },
-        { "rocket.name": { $regex: ".*" + search + ".*" } },
-      ],
-    };
-  if (!search && results !== undefined)
-    return results === "success"
+  const nameRegex = { name: { $regex: ".*" + search + ".*" } };
+  const rocketNameRegex = { "rocket.name": { $regex: ".*" + search + ".*" } };
+  const successFilter =
+    results === "success"
       ? { success: true }
       : { $or: [{ success: false }, { success: null }] };
+
+  if (search && results !== undefined) {
+    return {
+      $and: [successFilter, { $or: [nameRegex, rocketNameRegex] }],
+    };
+  }
+  if (search && results === undefined)
+    return { $or: [nameRegex, rocketNameRegex] };
+  if (!search && results !== undefined) return successFilter;
   return {};
 };
