@@ -1,38 +1,63 @@
 import { LaunchModel } from "../models/Launch";
 import { RocketModel } from "../models/Rocket";
+import { getAmountLaunchesInDB } from "../repositories/launch";
 
 import { fetchLaunches } from "./api/spaceX/listLaunches";
 import { fetchRockets } from "./api/spaceX/listRockets";
+import { amountLaunchesInMemory } from "./memoryCache";
 
 export const seed: () => Promise<
   "launches are loaded" | "launches pushed"
 > = async () => {
   try {
-    const launchesMongo = await LaunchModel.count();
+    // get amount of Launches
+    const totalLaunches = await getAmountLaunchesInDB();
 
-    if (launchesMongo > 0) return "launches are loaded";
+    if (totalLaunches > 0) return "launches are loaded";
 
+    amountLaunchesInMemory.clear();
+
+    // get launches from public api SpaceX
     const launchesFromSpaceXAPI = await fetchLaunches();
 
+    // get rockets from public api SpaceX
     const rocketsFromSpaceXAPI = await fetchRockets(launchesFromSpaceXAPI);
 
-    await LaunchModel.insertMany(
+    amountLaunchesInMemory.storeExpiringItem(
+      "totalLaunchesInDB",
+      launchesFromSpaceXAPI.length,
+      10
+    );
+
+    // save at mongo database all the launches
+    await LaunchModel.bulkWrite(
       launchesFromSpaceXAPI.map((launch) => ({
-        ...launch,
-        rocket: {
-          name: rocketsFromSpaceXAPI.find(
-            (rocket) => rocket.id === launch.rocket
-          )?.name,
-          id: launch.rocket,
+        insertOne: {
+          document: {
+            ...launch,
+            rocket: {
+              name: rocketsFromSpaceXAPI.find(
+                (rocket) => rocket.id === launch.rocket
+              ).name,
+              id: launch.rocket,
+            },
+          },
         },
       }))
     );
 
-    await RocketModel.insertMany(rocketsFromSpaceXAPI);
+    // save at mongo database all the rockets
+
+    await RocketModel.bulkWrite(
+      rocketsFromSpaceXAPI.map((rocket) => ({
+        insertOne: {
+          document: rocket,
+        },
+      }))
+    );
 
     return "launches pushed";
   } catch (error) {
-    console.log("error = ", error);
-    return error;
+    throw new Error(error.message);
   }
 };
