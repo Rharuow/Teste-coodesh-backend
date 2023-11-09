@@ -1,47 +1,25 @@
+import "module-alias/register";
 import { Request, Response } from "express";
-
-import { createFilter } from "./utils/createFilter";
-import { LaunchModel } from "../../models/Launch";
-import { validationResult } from "express-validator";
-
-export interface Query {
-  search?: string;
-  results?: "success" | "fail";
-  limit?: number;
-  page?: number;
-}
+import { Query } from "../../repositories/launch/utils/createFilter";
+import { getAmountLaunchesInDB, listLaunches } from "../../repositories/launch";
+import { launchesService } from "../../services/launchesService";
 
 const index = async (req: Request, res: Response) => {
+  // Permitted query parameters
   const { search, limit = 10, page = 1, results } = req.query as Query;
 
-  // If errors return 422, client didn't provide required values
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
   try {
-    const launches = await LaunchModel.find(createFilter(search, results))
-      .sort({ id: "desc" })
-      .limit(limit)
-      .skip((page - 1) * limit);
+    // List filtered launches
+    const launches = await listLaunches(req.query);
 
-    const launchesCount = await LaunchModel.find(
-      createFilter(search, results)
-    ).count();
+    // amount of filtered launches
+    const launchesCount = await getAmountLaunchesInDB({ search, results });
 
-    const totalPages = Math.ceil(launchesCount / limit);
-
-    return res.json({
-      results: launches,
-      totalDocs: launchesCount,
-      totalPages,
-      page: page,
-      hasNext: totalPages > page,
-      hasPrev: page > 1,
-    });
+    // service layer list launches
+    return res.json(
+      launchesService({ launches, launchesCount, params: { limit, page } })
+    );
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json({ message: "Sorry, there was an error listing the releases" });

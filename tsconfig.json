@@ -10,13 +10,34 @@
     "allowUnreachableCode": false,
     "noImplicitReturns": true,
     "allowJs": true,
-    "rootDir": "src",
+    "rootDir": "./src",
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@repositories/*": [
+        "./src/repositories/*"
+      ],
+      "@middleware/*": [
+        "./src/middleware/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@controllers/*": [
+        "./src/controllers/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    },
   },
   "include": [
     "./src/**/*"
+  ],
+  "types": [
+    "@types/jest"
   ],
   "exclude": [
     "./plugins/**/*",

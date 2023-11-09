@@ -1,9 +1,18 @@
+import mongoose from "mongoose";
 import { generateRandomColor } from "../../src/utils/generateColor";
-import { lastLaunches } from "../../src/utils/memoryCache";
+import {
+  amountLaunchesInMemory,
+  lastLaunchesInMemory,
+  launchesInMemory,
+  rocketsInMemory,
+} from "../../src/utils/memoryCache";
 
 afterAll(async () => {
-  lastLaunches.destroy();
-  await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)); // avoid jest open handle error
+  lastLaunchesInMemory.clear();
+  amountLaunchesInMemory.clear();
+  launchesInMemory.clear();
+  rocketsInMemory.clear();
+  await mongoose.connection.close();
 });
 
 describe("Test to generateRandomColor", () => {

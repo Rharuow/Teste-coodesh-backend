@@ -65,16 +65,3 @@ export type SpaceXLaunches = {
   launch_library_id: string;
   id: string;
 };
-
-export type RocketType = {
-  id: string;
-  name: string;
-  color: string;
-  launches: [
-    {
-      year: string | number;
-      success: boolean;
-      id: string;
-    }
-  ];
-};

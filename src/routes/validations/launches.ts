@@ -1,5 +1,6 @@
 import { Schema } from "express-validator";
 
+// Schema validation to permitted parameters for the launch router.
 export const validationLaunchSchema: Schema = {
   search: {
     optional: true,
