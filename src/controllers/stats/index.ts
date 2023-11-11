@@ -30,6 +30,7 @@ export const barStats = async (req: Request, res: Response) => {
     // service layer handle the rockets and totalLaunches
     return res.json(barService({ launches, rockets }));
   } catch (error) {
+    console.log("error = ", error.message);
     return res.status(400).json({
       message: "Sorry, there was an error generating the rocket bar stats",
     });
