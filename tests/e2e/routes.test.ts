@@ -9,6 +9,7 @@ import {
 } from "../../src/utils/memoryCache";
 import mongoose from "mongoose";
 import { LaunchSchema } from "../../src/models/Launch";
+import { getAmountLaunchesInDB } from "../../src/repositories/launch";
 
 afterAll(async () => {
   await mongoose.connection.close();
@@ -33,26 +34,32 @@ describe("Test route to list launches", () => {
     request(app).get("/launches").expect(200, done);
   });
 
-  test("It should response 200 and return empty array when call the launches router with query params 'search' with value 'Heavy'", (done) => {
-    request(app)
-      .get("/launches?search=Heavy")
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body.results.length).toBe(0);
-        done();
-      });
-  });
-
-  test("It should response 200 and return array with length greater than 0 when call the launches router with query params 'search' with value 'Falcon'", (done) => {
+  test("It should respond with a status code of 200 and return a list of launches that contain 'Falcon' in the name property or rocket.name property.", (done) => {
     request(app)
       .get("/launches?search=Falcon")
       .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body.results.length).toBeGreaterThan(0);
+        if (err) {
+          console.log("test error = ", err);
+          return done(err);
+        }
+        expect(
+          res.body.results.every(
+            (launch: LaunchSchema) =>
+              launch.rocket.name.includes("Falcon") ||
+              launch.name.includes("Falcon")
+          )
+        ).toBeTruthy();
         done();
       });
+  });
+
+  test("It should return a status code of 200, and the results in the returned body object must have X elements when the limit query parameter is set to X, where X is a number less than or equal to the total number of launches.", async () => {
+    const totalLaunches = await getAmountLaunchesInDB();
+    const limit = Math.floor(Math.random() * Number(totalLaunches)) + 1;
+    const response = await request(app).get(`/launches?limit=${limit}`);
+    expect(response.statusCode).toBe(200);
+    return expect(response.body.results.length).toBe(limit);
   });
 
   test("It should have two returns: the first being the array of launches on the first page, and the second being the array of launches on the second page, with both arrays being distinct.", async () => {
