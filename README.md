@@ -3513,3 +3513,9 @@ Retornar a mensagem "Fullstack Challenge 🏅 - Space X API"
 - [x] Layer Serializer
 - [x] Layer Repository
 - [x] Almost 100% of the test coverage (some lines executed in the production)
+
+### BUGS
+
+- [ ] Cache memory return the same object if alter page parameter
+  - [ ] Create test case
+  - [ ] Resolve the bug
