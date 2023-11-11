@@ -8,6 +8,7 @@ import {
   rocketsInMemory,
 } from "../../src/utils/memoryCache";
 import mongoose from "mongoose";
+import { LaunchSchema } from "../../src/models/Launch";
 
 afterAll(async () => {
   await mongoose.connection.close();
@@ -52,6 +53,24 @@ describe("Test route to list launches", () => {
         expect(res.body.results.length).toBeGreaterThan(0);
         done();
       });
+  });
+
+  test("It should have two returns: the first being the array of launches on the first page, and the second being the array of launches on the second page, with both arrays being distinct.", async () => {
+    const {
+      body: { results: launchesFirstPage },
+    } = await request(app).get("/launches?page=1&limit=3");
+    const {
+      body: { results: launchesSecondPage },
+    } = await request(app).get("/launches?page=2&limit=3");
+
+    return expect(
+      launchesFirstPage.some((launchOfFirstPage: LaunchSchema) =>
+        launchesSecondPage.some(
+          (launchOfSecondPage: LaunchSchema) =>
+            launchOfFirstPage.id === launchOfSecondPage.id
+        )
+      )
+    ).toBeFalsy();
   });
 
   test("It should response 422 if the limit params not is numeric", (done) => {
