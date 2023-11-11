@@ -54,6 +54,34 @@ describe("Test route to list launches", () => {
       });
   });
 
+  test("It should respond with a status code of 200 and return a list of launches where the 'success' property is equal to true when the results is set to 'success', or return a list of launches where the 'success' property is equal to false or null when the results is set to 'fail'.", (done) => {
+    request(app)
+      .get("/launches?results=success")
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          console.log("test error = ", err);
+          return done(err);
+        }
+        expect(
+          res.body.results.every((launch: LaunchSchema) => launch.success)
+        ).toBeTruthy();
+      });
+    request(app)
+      .get("/launches?results=fail")
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          console.log("test error = ", err);
+          return done(err);
+        }
+        expect(
+          res.body.results.every((launch: LaunchSchema) => launch.success)
+        ).toBeFalsy();
+        done();
+      });
+  });
+
   test("It should return a status code of 200, and the results in the returned body object must have X elements when the limit query parameter is set to X, where X is a number less than or equal to the total number of launches.", async () => {
     const totalLaunches = await getAmountLaunchesInDB();
     const limit = Math.floor(Math.random() * Number(totalLaunches)) + 1;
